@@ -1,11 +1,14 @@
-﻿namespace GeoFizik.Model
+﻿using System.Collections.ObjectModel;
+
+namespace GeoFizik.Model
 {
     public class Project : PropChange
     {
         private int id;
         private string name;
-        Customer customer_;
-
+        string? address;
+        Customer customer;
+        ObservableCollection<Area> areas;
         public int Id
         {
             get { return id; }
@@ -26,13 +29,33 @@
             }
         }
 
-        public Customer Customer_
+        public string? Address
         {
-            get { return customer_; }
+            get { return address; }
             set
             {
-                customer_ = value;
+                address = value;
+                OnPropertyChanged(nameof(Address));
+            }
+        }
+
+        public Customer Customer
+        {
+            get { return customer; }
+            set
+            {
+                customer = value;
                 OnPropertyChanged(nameof(Customer));
+            }
+        }
+
+        public ObservableCollection<Area> Areas
+        {
+            get { return areas; }
+            set
+            {
+                areas = value;
+                OnPropertyChanged(nameof(Areas));
             }
         }
     }

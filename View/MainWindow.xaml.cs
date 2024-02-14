@@ -21,8 +21,7 @@ namespace GeoFizik
 {
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
-                Customer customer1 = new Customer { Name = "hi" };
-
+                Customer customer1 = new Customer { Name = "hi" , Email = "ailsuydhgbioas@mail.ry"};
                 db.Customers.AddRange(customer1);
                 db.SaveChanges();
             }
