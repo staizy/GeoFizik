@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,8 +10,9 @@ namespace GeoFizik.Model
     public class Picket : PropChange
     {
         int id;
+        double x, y;
         Profile profile;
-        double x, y, value;
+        ObservableCollection<PicketValue> picketValues;
 
         public int Id
         {
@@ -52,13 +54,13 @@ namespace GeoFizik.Model
             }
         }
 
-        public double Value
+        public ObservableCollection<PicketValue> PicketValues
         {
-            get { return value; }
+            get { return picketValues; }
             set
             {
-                this.value = value;
-                OnPropertyChanged(nameof(Value));
+                picketValues = value;
+                OnPropertyChanged(nameof(PicketValues));
             }
         }
     }
