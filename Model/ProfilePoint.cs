@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GeoFizik.Model
 {
-    public class AreaPoint : PropChange
+    public class ProfilePoint : PropChange
     {
-        int id;
-        double x;
-        double y;
-        Area area;
+        private int id;
+        private double x, y;
+        private Profile profile;
 
         public int Id
         {
@@ -21,6 +19,16 @@ namespace GeoFizik.Model
             {
                 id = value;
                 OnPropertyChanged(nameof(Id));
+            }
+        }
+
+        public Profile Profile
+        {
+            get { return profile; }
+            set
+            {
+                profile = value;
+                OnPropertyChanged(nameof(Profile));
             }
         }
 
@@ -41,15 +49,6 @@ namespace GeoFizik.Model
             {
                 y = value;
                 OnPropertyChanged(nameof(Y));
-            }
-        }
-        public Area Area
-        {
-            get { return area; }
-            set
-            {
-                area = value;
-                OnPropertyChanged(nameof(Area));
             }
         }
     }

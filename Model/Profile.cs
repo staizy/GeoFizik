@@ -12,6 +12,8 @@ namespace GeoFizik.Model
         int id;
         Area area;
         ObservableCollection<Picket> pickets;
+        ObservableCollection<ProfilePoint> points;
+
         public int Id
         {
             get { return id; }
@@ -38,6 +40,16 @@ namespace GeoFizik.Model
             {
                 pickets = value;
                 OnPropertyChanged(nameof(Pickets));
+            }
+        }
+
+        public ObservableCollection<ProfilePoint> Points
+        {
+            get { return points; }
+            set
+            {
+                points = value;
+                OnPropertyChanged(nameof(Points));
             }
         }
     }

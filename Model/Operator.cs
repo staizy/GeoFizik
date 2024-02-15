@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace GeoFizik.Model
 {
-    public class PicketValue : PropChange
+    public class Operator : PropChange
     {
-        int id;
+        private int id;
+        private string name;
+        private string suranme;
+        private string device;
         Picket picket;
-        double amplitude, h_value;
 
         public int Id
         {
@@ -22,23 +24,33 @@ namespace GeoFizik.Model
             }
         }
 
-        public double Amplitude
+        public string Name
         {
-            get { return amplitude; }
+            get { return name; }
             set
             {
-                amplitude = value;
-                OnPropertyChanged(nameof(Amplitude));
+                name = value;
+                OnPropertyChanged(nameof(Name));
             }
         }
 
-        public double H_value
+        public string Surname
         {
-            get { return h_value; }
+            get { return suranme; }
             set
             {
-                h_value = value;
-                OnPropertyChanged(nameof(H_value));
+                suranme = value;
+                OnPropertyChanged(nameof(Surname));
+            }
+        }
+
+        public string Device
+        {
+            get { return device; }
+            set
+            {
+                device = value;
+                OnPropertyChanged(nameof(Device));
             }
         }
 
