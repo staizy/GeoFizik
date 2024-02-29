@@ -34,14 +34,25 @@ namespace GeoFizik.ViewModel
             DeletePicketCommand = new(DeletePicket, (obj) => SelectedPicket != null);
             SavePicketCommand = new(SavePicket);
             SavePointCommand = new(SavePoint);
+            OpenPicketCommand = new(OpenPicket);
         }
         public RelayCommand AddPointCommand { get; set; }
         public RelayCommand DeletePointCommand { get; set; }
         public RelayCommand AddPicketCommand { get; set; }
+        public RelayCommand OpenPicketCommand { get; set; }
         public RelayCommand DeletePicketCommand { get; set; }
         public RelayCommand SavePicketCommand { get; set; }
         public RelayCommand SavePointCommand { get; set; }
         public RelayCommand ZoomCommand { get; set; }
+
+        void OpenPicket(object obj)
+        {
+            new PicketWindow()
+            {
+                DataContext = new PicketViewModel((Picket)obj)
+            }.ShowDialog();
+            OnPropertyChanged(nameof(obj));
+        }
 
         void AddPoint(object obj)
         {

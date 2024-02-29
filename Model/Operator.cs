@@ -12,7 +12,6 @@ namespace GeoFizik.Model
         private int id;
         private string name;
         private string surname;
-        private string? device;
         ObservableCollection<Picket>? pickets;
 
         public override string ToString()
@@ -50,23 +49,13 @@ namespace GeoFizik.Model
             }
         }
 
-        public string? Device
-        {
-            get { return device; }
-            set
-            {
-                device = value;
-                OnPropertyChanged(nameof(Device));
-            }
-        }
-
-        public ObservableCollection<Picket>? Picket
+        public ObservableCollection<Picket>? Pickets
         {
             get { return pickets; }
             set
             {
                 pickets = value;
-                OnPropertyChanged(nameof(Picket));
+                OnPropertyChanged(nameof(Pickets));
             }
         }
     }

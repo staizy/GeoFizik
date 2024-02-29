@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GeoFizik.View"
         mc:Ignorable="d"
-        Title="Новый Оператор" MinHeight="230" MinWidth="320"
+        Title="Новый Оператор" MinHeight="185" MinWidth="320"
         MaxHeight="190" MaxWidth="320"
         FontSize="18px">
     <Grid>
@@ -21,12 +21,10 @@
         <StackPanel>
             <Label Margin="3px">Имя:</Label>
             <Label Margin="3px">Фамилия:</Label>
-            <Label Margin="3px">Девайс:</Label>
         </StackPanel>
         <StackPanel Grid.Column="1">
             <TextBox Margin="3px" Height="35" Text="{Binding Path=Name}"/>
             <TextBox Margin="3px" Height="35" Text="{Binding Path=Surname}"/>
-            <TextBox Margin="3px" Height="35" Text="{Binding Path=Device}"/>
         </StackPanel>
         <StackPanel Grid.ColumnSpan="2" Grid.Row="2">
             <Button Margin="3px" Click="Button_Click" IsDefault="True">Добавить</Button>

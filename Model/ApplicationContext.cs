@@ -32,6 +32,7 @@ namespace GeoFizik.Model
                 instance.ProfilePoints.Load();
                 instance.Profiles.Load();
                 instance.Pickets.Load();
+                instance.PicketValues.Load();
                 if (exists) instance.Customers.Add(DefaultData);
                 instance.SaveChanges();
             }
@@ -63,10 +64,10 @@ namespace GeoFizik.Model
                         },
                             Profiles=new() {
                                 new()
-                                {                                    
+                                {
                                     Points= new()
                                     {
-                                        new () {X=3, Y=5 },
+                                        new () {X=3, Y=5},
                                         new () {X=5, Y=7 },
                                         new () {X=11, Y=6 },
                                         new () {X=21, Y=9 },
@@ -74,12 +75,14 @@ namespace GeoFizik.Model
                                     },
                                     Pickets = new()
                                     {
-                                        new () {X=25, Y=9, Operator= gena}, 
-                                        new () {X=6, Y=9, Operator=gena},
-                                        new () {X=13, Y=3, Operator=gena },
-                                        new () {X=16, Y=1, Operator=gena },
+                                        new () {X=25, Y=9, PicketValues= new() { new() {Amplitude = 2, H_value = 3 },
+                                                                                 new() {Amplitude = 1, H_value = 4},
+                                                                                 new() {Amplitude = 2, H_value = 6}, } },
+                                        new () {X=6, Y=9},
+                                        new () {X=13, Y=3},
+                                        new () {X=16, Y=1},
                                     }
-                                },
+                                },                                
                                 new()
                                 {
                                     Points= new()

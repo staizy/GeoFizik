@@ -15,6 +15,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -23,83 +25,42 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-        </Grid>
-        <Grid Grid.Row="1">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <Label>Точки профиля:</Label>
-                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                    <ListView VerticalAlignment="Stretch" ItemsSource="{Binding Profile.Points}" SelectedItem="{Binding SelectedPoint}">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="X: "/>
-                                    <TextBox MinWidth="40" Text="{Binding X}">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="LostFocus">
-                                                <i:InvokeCommandAction Command="{Binding DataContext.SavePointCommand, ElementName=Main}" CommandParameter="{Binding}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </TextBox>
-                                    <Label Content=" Y: "/>
-                                    <TextBox MinWidth="40" Text="{Binding Y}" >
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="LostFocus">
-                                                <i:InvokeCommandAction Command="{Binding DataContext.SavePointCommand, ElementName=Main}" CommandParameter="{Binding}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </TextBox>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </ScrollViewer>
-                <Grid Grid.Row="3">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button Command="{Binding AddPointCommand}">Добавить</Button>
-                    <Button Command="{Binding DeletePointCommand}" Grid.Column="1">Удалить</Button>
-                </Grid>
-            </Grid>
-        </Grid>
+        <Label>Оператор:</Label>
+        <ComboBox Grid.Row="1" ItemsSource="{Binding Operators}" SelectedItem="{Binding SelectedOperator}"/>
         <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Command="{Binding AddOperatorCommand}">Добавить</Button>
+            <Button Grid.Column="1" Command="{Binding DeleteOperatorCommand}">Удалить</Button>
+        </Grid>
+        <Grid Grid.Row="3" Grid.RowSpan="2">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <Label>Пикеты:</Label>
+                <Label>Значения на пикете:</Label>
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                    <ListView VerticalAlignment="Stretch" ItemsSource="{Binding Profile.Pickets}" SelectedItem="{Binding SelectedPicket}">
+                    <ListView VerticalAlignment="Stretch" ItemsSource="{Binding Picket.PicketValues}" SelectedItem="{Binding SelectedPicketValue}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Label Content="X: "/>
-                                    <TextBox MinWidth="40" Text="{Binding X}">
+                                    <Label Content="Амплитуда: "/>
+                                    <TextBox MinWidth="30" Text="{Binding Amplitude}">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="LostFocus">
-                                                <i:InvokeCommandAction Command="{Binding DataContext.SavePointCommand, ElementName=Main}" CommandParameter="{Binding}"/>
+                                                <i:InvokeCommandAction Command="{Binding DataContext.SavePicketValueCommand, ElementName=Main}" CommandParameter="{Binding}"/>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </TextBox>
-                                    <Label Content=" Y: "/>
-                                    <TextBox MinWidth="40" Text="{Binding Y}" >
+                                    <Label Content="Значение (H): "/>
+                                    <TextBox MinWidth="30" Text="{Binding H_value}" >
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="LostFocus">
-                                                <i:InvokeCommandAction Command="{Binding DataContext.SavePointCommand, ElementName=Main}" CommandParameter="{Binding}"/>
+                                                <i:InvokeCommandAction Command="{Binding DataContext.SavePicketValueCommand, ElementName=Main}" CommandParameter="{Binding}"/>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </TextBox>
@@ -113,8 +74,8 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Command="{Binding AddPicketCommand}">Добавить</Button>
-                    <Button Command="{Binding DeletePicketCommand}" Grid.Column="1">Удалить</Button>
+                    <Button Command="{Binding AddPicketValueCommand}">Добавить</Button>
+                    <Button Command="{Binding DeletePicketValueCommand}" Grid.Column="1">Удалить</Button>
                 </Grid>
             </Grid>
         </Grid>
@@ -123,7 +84,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Grid.Column="1">Отображение:</Label>
+            <Label Grid.Row="0" Grid.Column="1">График значений:</Label>
             <ScrollViewer Grid.Row="0" Grid.RowSpan="10" Grid.ColumnSpan="2" Grid.Column="1"  HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
                 <Image Source="{Binding Image}" Stretch="Uniform" Margin="4">
                     <i:Interaction.Triggers>
