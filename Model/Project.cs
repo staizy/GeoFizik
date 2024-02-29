@@ -9,6 +9,12 @@ namespace GeoFizik.Model
         string? address;
         Customer customer;
         ObservableCollection<Area> areas;
+
+        public override string ToString()
+        {
+            return $"{name}, {address ?? ""}";
+        }
+
         public int Id
         {
             get { return id; }

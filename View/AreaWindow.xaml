@@ -5,10 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GeoFizik"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:VM="clr-namespace:GeoFizik.ViewModel"
         mc:Ignorable="d"
-        Title="GeoFizik" MinHeight="500" MinWidth="800"
+        Title="GeoFizik" MinHeight="500" MinWidth="800" Name="Main"
         Height="500" Width="800"
         FontSize="14">
+    <Window.DataContext>
+        <VM:AreaViewModel/>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -26,7 +30,7 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Label>Название площади:</Label>
-            <TextBox Grid.Row="1"/>
+            <TextBox Text="{Binding AreaName}" Grid.Row="1"/>
         </Grid>            
         <Grid Grid.Row="1">
             <Grid>
@@ -37,15 +41,29 @@
                 </Grid.RowDefinitions>
                 <Label>Точки площади:</Label>
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                    <ListView VerticalAlignment="Stretch">
-                        <!--<ListView.ItemTemplate>
-                        <DataTemplate>-->
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="sgdfsdfg" Padding="5"/>
-                            <Button Content="Открыть"/>
-                        </StackPanel>
-                        <!--</DataTemplate>
-                       </ListView.ItemTemplate>-->
+                    <ListView VerticalAlignment="Stretch" ItemsSource="{Binding Area.Points}" SelectedItem="{Binding SelectedPoint}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="X: "/>
+                                    <TextBox MinWidth="40" Text="{Binding X}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="LostFocus">
+                                                <i:InvokeCommandAction Command="{Binding DataContext.SavePointCommand, ElementName=Main}" CommandParameter="{Binding}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBox>
+                                    <Label Content=" Y: "/>
+                                    <TextBox MinWidth="40" Text="{Binding Y}" >
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="LostFocus">
+                                                <i:InvokeCommandAction Command="{Binding DataContext.SavePointCommand, ElementName=Main}" CommandParameter="{Binding}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBox>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
                     </ListView>
                 </ScrollViewer>
                 <Grid Grid.Row="3">
@@ -53,8 +71,8 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button>Добавить</Button>
-                    <Button Grid.Column="1">Удалить</Button>
+                    <Button Command="{Binding AddPointCommand}">Добавить</Button>
+                    <Button Command="{Binding DeletePointCommand}" Grid.Column="1">Удалить</Button>
                 </Grid>
             </Grid>
         </Grid>
@@ -67,15 +85,15 @@
                 </Grid.RowDefinitions>
                 <Label>Профили:</Label>
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                    <ListView VerticalAlignment="Stretch">
-                        <!--<ListView.ItemTemplate>
-                <DataTemplate>-->
+                    <ListView VerticalAlignment="Stretch" ItemsSource="{Binding Area.Profiles}" SelectedItem="{Binding SelectedProfile}">
+                        <ListView.ItemTemplate>
+                <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="sgdfsdfg" Padding="5"/>
-                            <Button Content="Открыть"/>
+                            <TextBlock Text="{Binding Id}" Padding="5"/>
+                            <Button Command="{Binding DataContext.OpenProfileCommand, ElementName=Main}" CommandParameter="{Binding}" Content="Открыть"/>
                         </StackPanel>
-                        <!--</DataTemplate>
-               </ListView.ItemTemplate>-->
+                        </DataTemplate>
+               </ListView.ItemTemplate>
                     </ListView>
                 </ScrollViewer>
                 <Grid Grid.Row="3">
@@ -83,8 +101,8 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button>Добавить</Button>
-                    <Button Grid.Column="1">Удалить</Button>
+                    <Button Command="{Binding AddProfileCommand}">Добавить</Button>
+                    <Button Command="{Binding DeleteProfileCommand}" Grid.Column="1">Удалить</Button>
                 </Grid>
             </Grid>
         </Grid>

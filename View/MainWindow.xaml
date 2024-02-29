@@ -6,9 +6,13 @@
         xmlns:local="clr-namespace:GeoFizik"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="GeoFizik" MinHeight="500" MinWidth="800"
+        Title="GeoFizik" MinHeight="500" MinWidth="800" Name="Main" 
         Height="500" Width="800"
-        FontSize="14">
+        FontSize="14" 
+        xmlns:VM="clr-namespace:GeoFizik.ViewModel">
+    <Window.DataContext>
+        <VM:MainViewModel/>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -29,24 +33,24 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Label>Заказчики:</Label>
-            <ComboBox Grid.Row="1"></ComboBox>
+            <ComboBox Grid.Row="1" ItemsSource="{Binding Customers}" SelectedItem="{Binding SelectedCustomer}"/>
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button>Добавить</Button>
-                <Button Grid.Column="1">Удалить</Button>
+                <Button Command="{Binding AddCustomerCommand}">Добавить</Button>
+                <Button Grid.Column="1" Command="{Binding DeleteCustomerCommand}">Удалить</Button>
             </Grid>
             <Label Grid.Row="3">Проекты:</Label>
-            <ComboBox Grid.Row="4"></ComboBox>
+            <ComboBox Grid.Row="4" ItemsSource="{Binding SelectedCustomer.Projects}" SelectedItem="{Binding SelectedProject}"></ComboBox>
             <Grid Grid.Row="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button>Добавить</Button>
-                <Button Grid.Column="1">Удалить</Button>
+                <Button Command="{Binding AddProjectCommand}">Добавить</Button>
+                <Button Grid.Column="1" Command="{Binding DeleteProjectCommand}">Удалить</Button>
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
@@ -58,24 +62,24 @@
                 </Grid.RowDefinitions>
                 <Label>Площади:</Label>
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                    <ListView VerticalAlignment="Stretch">
-                        <!--<ListView.ItemTemplate>
-                        <DataTemplate>-->
-                            <DockPanel>
-                                <TextBlock Text="sgdfkgkjgkjjkhkjksdfg" Padding="5"/>
-                                <Button Content="Открыть"/>
-                            </DockPanel>                    
-                        <!--</DataTemplate>
-                       </ListView.ItemTemplate>-->
-                </ListView>
+                    <ListView VerticalAlignment="Stretch" ItemsSource="{Binding SelectedProject.Areas}" SelectedItem="{Binding SelectedArea}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <TextBlock Text="{Binding Name}" Padding="5"/>
+                                    <Button Command="{Binding DataContext.OpenAreaCommand, ElementName=Main}" CommandParameter="{Binding}" Content="Открыть"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </ScrollViewer>
                 <Grid Grid.Row="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button>Добавить</Button>
-                    <Button Grid.Column="1">Удалить</Button>
+                    <Button Command="{Binding AddAreaCommand}">Добавить</Button>
+                    <Button Command="{Binding DeleteAreaCommand}" Grid.Column="1">Удалить</Button>
                 </Grid>
             </Grid>
         </Grid>

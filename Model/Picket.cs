@@ -12,8 +12,8 @@ namespace GeoFizik.Model
         int id;
         double x, y;
         Profile profile;
-        ObservableCollection<PicketValue> picketValues;
-        ObservableCollection<Operator> picketOperator;
+        ObservableCollection<PicketValue>? picketValues;
+        Operator? _operator;
 
         public int Id
         {
@@ -55,7 +55,7 @@ namespace GeoFizik.Model
             }
         }
 
-        public ObservableCollection<PicketValue> PicketValues
+        public ObservableCollection<PicketValue>? PicketValues
         {
             get { return picketValues; }
             set
@@ -65,13 +65,13 @@ namespace GeoFizik.Model
             }
         }
 
-        public ObservableCollection<Operator> PicketOperator
+        public Operator? Operator
         {
-            get { return picketOperator; }
+            get { return _operator; }
             set
             {
-                picketOperator = value;
-                OnPropertyChanged(nameof(PicketOperator));
+                _operator = value;
+                OnPropertyChanged(nameof(Operator));
             }
         }
     }

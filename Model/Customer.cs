@@ -9,6 +9,11 @@ namespace GeoFizik.Model
         private string email;
         ObservableCollection<Project> projects;
 
+        public override string ToString()
+        {
+            return $"{name}, {email}";
+        }
+
         public int Id
         {
             get { return id; }

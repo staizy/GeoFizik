@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,9 +11,14 @@ namespace GeoFizik.Model
     {
         private int id;
         private string name;
-        private string suranme;
-        private string device;
-        Picket picket;
+        private string surname;
+        private string? device;
+        ObservableCollection<Picket>? pickets;
+
+        public override string ToString()
+        {
+            return $"{name} {surname}";
+        }
 
         public int Id
         {
@@ -36,15 +42,15 @@ namespace GeoFizik.Model
 
         public string Surname
         {
-            get { return suranme; }
+            get { return surname; }
             set
             {
-                suranme = value;
+                surname = value;
                 OnPropertyChanged(nameof(Surname));
             }
         }
 
-        public string Device
+        public string? Device
         {
             get { return device; }
             set
@@ -54,12 +60,12 @@ namespace GeoFizik.Model
             }
         }
 
-        public Picket Picket
+        public ObservableCollection<Picket>? Picket
         {
-            get { return picket; }
+            get { return pickets; }
             set
             {
-                picket = value;
+                pickets = value;
                 OnPropertyChanged(nameof(Picket));
             }
         }
