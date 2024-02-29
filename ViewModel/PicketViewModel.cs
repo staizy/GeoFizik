@@ -30,9 +30,10 @@ namespace GeoFizik.ViewModel
             Picket = picket;
             SelectedOperator = Picket.Operator;
             AddPicketValueCommand = new(AddPicketValue);
-            DeletePicketValueCommand = new (DeletePicketValue);
+            DeletePicketValueCommand = new (DeletePicketValue, (obj) => SelectedPicketValue != null);
             SavePicketValueCommand = new (SavePicketValue);
             AddOperatorCommand = new(AddOperator);
+            DeleteOperatorCommand = new(DeleteOperator, (obj) => SelectedOperator != null);
 
         }
         public RelayCommand AddPicketValueCommand { get; set; }
@@ -55,6 +56,16 @@ namespace GeoFizik.ViewModel
                 SelectedOperator = oper;
                 Picket.Operator = oper;
                 db.Operators.Add(oper);
+                db.SaveChanges();
+            }
+        }
+
+        void DeleteOperator(object obj)
+        {
+            if (MessageBox.Show("Удалить этого оператора?", "Удаление", MessageBoxButton.YesNo) == MessageBoxResult.No) return;
+            else
+            {
+                db.Operators.Remove(SelectedOperator);
                 db.SaveChanges();
             }
         }
@@ -98,6 +109,7 @@ namespace GeoFizik.ViewModel
             set
             {
                 selectedOperator = value;
+                Picket.Operator = SelectedOperator;
                 OnPropertyChanged(nameof(SelectedOperator));
             }
         }
