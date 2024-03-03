@@ -44,8 +44,6 @@ namespace GeoFizik.Model
             optionsBuilder.UseSqlServer(@"Server=LAPTOP-DA4EO4II;Database=GeoKrizo2024;Trusted_Connection=True;TrustServerCertificate=True");
         }
 
-        static Operator gena = new() { Name = "Гена", Surname = "Васильев" };
-
         static Customer DefaultData = new Customer()
         {
 

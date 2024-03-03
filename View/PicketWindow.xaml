@@ -21,13 +21,12 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Label>Оператор:</Label>
-        <ComboBox Grid.Row="1" ItemsSource="{Binding Operators}" SelectedItem="{Binding SelectedOperator}"/>
-        <Grid Grid.Row="2">
+        <Label Grid.Column="1">Оператор:</Label>
+        <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Operators}" SelectedItem="{Binding SelectedOperator}"/>
+        <Grid Grid.Row="2" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -35,7 +34,7 @@
             <Button Command="{Binding AddOperatorCommand}">Добавить</Button>
             <Button Grid.Column="1" Command="{Binding DeleteOperatorCommand}">Удалить</Button>
         </Grid>
-        <Grid Grid.Row="3" Grid.RowSpan="2">
+        <Grid Grid.Row="3" Grid.RowSpan="2" Grid.Column="1">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -79,13 +78,13 @@
                 </Grid>
             </Grid>
         </Grid>
-        <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="3">
+        <Grid Grid.RowSpan="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Grid.Column="1">График значений:</Label>
-            <ScrollViewer Grid.Row="0" Grid.RowSpan="10" Grid.ColumnSpan="2" Grid.Column="1"  HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+            <Label Grid.Row="0">График значений:</Label>
+            <ScrollViewer Grid.Row="0" Grid.RowSpan="10" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
                 <Image Source="{Binding Image}" Stretch="Uniform" Margin="4">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="PreviewMouseWheel">
