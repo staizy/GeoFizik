@@ -10,10 +10,12 @@ namespace GeoFizik.ViewModel
     public class MainViewModel : PropChange
     {
         ApplicationContext db = ApplicationContext.getInstance();
+        DrawingImage image;
 
         Customer selectedCustomer;
         Project selectedProject;
         Area selectedArea;
+
         public ObservableCollection<Customer> Customers { get => db.Customers.Local.ToObservableCollection(); }
 
         public MainViewModel()
@@ -121,6 +123,7 @@ namespace GeoFizik.ViewModel
             {
                 selectedCustomer = value;
                 OnPropertyChanged();
+                Redraw();
             }
         }
         public Project SelectedProject
@@ -130,6 +133,7 @@ namespace GeoFizik.ViewModel
             {
                 selectedProject = value;
                 OnPropertyChanged();
+                Redraw();
             }
         }
 
@@ -140,7 +144,30 @@ namespace GeoFizik.ViewModel
             {
                 selectedArea = value;
                 OnPropertyChanged();
+                Redraw();
             }
+        }
+
+        public DrawingImage Image
+        {
+            get { return image; }
+            set
+            {
+                image = value;
+                OnPropertyChanged(nameof(Image));
+            }
+        }
+
+        void Redraw()
+        {
+            var newimage = new DrawModel();
+            foreach (var area in SelectedProject?.Areas ?? new())
+            {
+                area.Draw(newimage, area == SelectedArea ? Brushes.Yellow : Brushes.Green);
+                foreach (var profile in area.Profiles ?? new())
+                    profile.Draw(newimage, area == SelectedArea ? Brushes.Yellow : Brushes.Green);
+            }
+            Image = newimage.Render();
         }
     }
 }

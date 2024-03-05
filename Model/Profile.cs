@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace GeoFizik.Model
 {
@@ -13,6 +14,14 @@ namespace GeoFizik.Model
         Area area;
         ObservableCollection<Picket> pickets;
         ObservableCollection<ProfilePoint> points;
+
+        public void Draw(DrawModel dm, Brush br)
+        {
+            if (points is null) return;
+            dm.DrawPoly(points.Select(p => p.AsPoint).ToArray(), br, 0.4, false);
+            foreach (var p in points)
+                dm.DrawText($"{p.X},{p.Y}", p.X, p.Y, Brushes.Black, 1.3);
+        }
 
         public int Id
         {

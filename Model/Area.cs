@@ -16,6 +16,14 @@ namespace GeoFizik.Model
         ObservableCollection<Profile> profiles;
         ObservableCollection<AreaPoint> points;
 
+        public void Draw(DrawModel dm, Brush br)
+        {
+            if (points is null) return;
+            dm.DrawPoly(points.Select(p => p.AsPoint).ToArray(), br, 0.5, true);
+            foreach (var p in points)
+                dm.DrawText($"{p.X};{p.Y}", p.X, p.Y, Brushes.Black, 1.5);
+        }
+
         public int Id
         {
             get { return id; }
