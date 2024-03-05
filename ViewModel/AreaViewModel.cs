@@ -1,6 +1,5 @@
 ﻿using GeoFizik.Model;
 using GeoFizik.View;
-using GeoMeasure.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Windows.Media;
 
