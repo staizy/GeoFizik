@@ -163,9 +163,13 @@ namespace GeoFizik.ViewModel
             var newimage = new DrawModel();
             foreach (var area in SelectedProject?.Areas ?? new())
             {
-                area.Draw(newimage, area == SelectedArea ? Brushes.Yellow : Brushes.Green);
+                if (area == SelectedArea) area.Draw(newimage, Brushes.Blue);
+                else area.Draw(newimage, Brushes.LightBlue);
                 foreach (var profile in area.Profiles ?? new())
-                    profile.Draw(newimage, area == SelectedArea ? Brushes.Yellow : Brushes.Green);
+                {
+                    if (area == SelectedArea) profile.Draw(newimage, Brushes.Gray);
+                    else profile.Draw(newimage, Brushes.LightGray);
+                }
             }
             Image = newimage.Render();
         }

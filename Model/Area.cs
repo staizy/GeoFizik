@@ -19,9 +19,12 @@ namespace GeoFizik.Model
         public void Draw(DrawModel dm, Brush br)
         {
             if (points is null) return;
-            dm.DrawPoly(points.Select(p => p.AsPoint).ToArray(), br, 0.5, true);
+            dm.DrawPoly(points.Select(p => p.AsPoint).ToArray(), br, 0.2, true);
             foreach (var p in points)
-                dm.DrawText($"{p.X};{p.Y}", p.X, p.Y, Brushes.Black, 1.5);
+            {
+                dm.DrawText($"{p.X};{p.Y}", p.X, p.Y, br, 1);
+                dm.DrawCircle(p.X, p.Y, 0.3, br);
+            }
         }
 
         public int Id

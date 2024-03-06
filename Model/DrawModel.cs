@@ -15,7 +15,7 @@ namespace GeoFizik.Model
             drawingGroup.Children.Add(geometryDrawing);
         }
 
-        public void DrawText(string text, double x, double y, Brush brush, double size = 12)
+        public void DrawText(string text, double x, double y, Brush brush, double size = 10)
         {
             var formattedText = new FormattedText(text, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), size, brush, 1);
             var textGeometry = formattedText.BuildGeometry(new Point(x, y));
@@ -49,18 +49,19 @@ namespace GeoFizik.Model
             var newChildren = drawingGroup.Children.ToArray();
             drawingGroup.Children.Clear();
 
+            if ((minY < 0 && maxY > 0) || drawAxes) DrawLine(minX, 0, maxX, 0, Brushes.Gray, 0.1);
+            if ((minX < 0 && maxX > 0) || drawAxes) DrawLine(0, minY, 0, maxY, Brushes.Gray, 0.1);
+
             for (double i = minX > 0 ? minX + grid - minX % grid : minX - minX % grid; i < maxX; i += grid)
             {
-                DrawLine(i, minY, i, maxY, Brushes.Gray, 0.1);
+                DrawLine(i, minY, i, maxY, Brushes.Gray, 0.08);
                 for (double j = minY > 0 ? minY + grid - minY % grid : minY - minY % grid; j < maxY; j += grid)
                 {
-                    DrawLine(minX, j, maxX, j, Brushes.Gray, 0.1);
-                    DrawText($"{i};{j}", i, j, Brushes.Black, 1);
+                    DrawLine(minX, j, maxX, j, Brushes.Gray, 0.08);
+                    DrawText($"{i}; {j}", i-1, j, Brushes.Black, 0.7);
+                    DrawCircle(i, j, 0.2, Brushes.Gray);
                 }
-            }
-
-            if ((minY < 0 && maxY > 0) || drawAxes) DrawLine(minX, 0, maxX, 0, Brushes.Gray, 0.2);
-            if ((minX < 0 && maxX > 0) || drawAxes) DrawLine(0, minY, 0, maxY, Brushes.Gray, 0.2);
+            }            
             foreach (var child in newChildren) drawingGroup.Children.Add(child);
             return new DrawingImage(drawingGroup);
         }

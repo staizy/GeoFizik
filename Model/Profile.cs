@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Media;
 
 namespace GeoFizik.Model
@@ -18,9 +13,12 @@ namespace GeoFizik.Model
         public void Draw(DrawModel dm, Brush br)
         {
             if (points is null) return;
-            dm.DrawPoly(points.Select(p => p.AsPoint).ToArray(), br, 0.4, false);
+            dm.DrawPoly(points.Select(p => p.AsPoint).ToArray(), br, 0.2, false);
             foreach (var p in points)
-                dm.DrawText($"{p.X},{p.Y}", p.X, p.Y, Brushes.Black, 1.3);
+            {
+                dm.DrawText($"{p.X};{p.Y}", p.X, p.Y, br, 0.7);
+                dm.DrawCircle(p.X, p.Y, 0.2, br);
+            }
         }
 
         public int Id
