@@ -120,19 +120,17 @@ namespace GeoFizik.ViewModel
         {
             var newimage = new DrawModel();
             Area.Draw(newimage, Brushes.Blue);
-            foreach (var points in Area?.Points ?? new())
+            foreach (var point in Area?.Points ?? new())
             {
-                newimage.DrawCircle(points.X, points.Y, 0.3, Brushes.Blue);
+                if (SelectedPoint == point) newimage.DrawCircle(point.X, point.Y, 0.4, Brushes.Yellow);
+                else newimage.DrawCircle(point.X, point.Y, 0.4, Brushes.Blue);
+            }
+            foreach (var point in Area.Profiles ?? new())
+            {
+                if (SelectedProfile == point) point.Draw(newimage, Brushes.Green);
+                else point.Draw(newimage, Brushes.Gray);
             }
             Image = newimage.Render();
         }
-
-        /*var vd = new VisDraw();
-        Area.Draw(vd, Brushes.Green);
-            foreach (var p in Area.Points ?? new ())
-                vd.DrawCircle(p.X, p.Y, 0.6, SelectedPoint == p? Brushes.Yellow : Brushes.Green);
-            foreach (var p in Area.Profiles ?? new ())
-                p.Draw(vd, p == SelectedProfile? Brushes.Yellow : Brushes.Green);
-        Image = vd.Render();*/
     }
 }
