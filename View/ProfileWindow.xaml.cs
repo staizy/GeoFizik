@@ -14,9 +14,6 @@ using System.Windows.Shapes;
 
 namespace GeoFizik.View
 {
-    /// <summary>
-    /// Логика взаимодействия для ProfileWindow.xaml
-    /// </summary>
     public partial class ProfileWindow : Window
     {
         public ProfileWindow()

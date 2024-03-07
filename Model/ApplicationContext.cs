@@ -60,7 +60,8 @@ namespace GeoFizik.Model
                             new() { X=6, Y=21 },
                             new() { X=6, Y=23 },
                         },
-                            Profiles=new() {
+                            Profiles=new() 
+                            {
                                 new()
                                 {
                                     Points= new()
@@ -100,6 +101,24 @@ namespace GeoFizik.Model
                                 new() { X=38, Y=-15 },
                                 new() { X=36, Y=-11 },
                                 new() { X=9, Y=-11 },
+                            },
+                        Profiles=new()
+                            {
+                                new()
+                                {
+                                    Points= new()
+                                    {
+                                        new () {X=32, Y=-22},
+                                        new () {X=34, Y=-24 },
+                                        new () {X=35, Y=-20 },
+                                    },
+                                    Pickets = new() {}
+                                    
+                                },
+                                new()
+                                {
+                                    Points= new() { }                                    
+                                }
                             }
                         },
                         new() { Name="Зеленка" }

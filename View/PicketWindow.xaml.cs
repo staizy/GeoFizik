@@ -14,9 +14,6 @@ using System.Windows.Shapes;
 
 namespace GeoFizik.View
 {
-    /// <summary>
-    /// Логика взаимодействия для PicketWindow.xaml
-    /// </summary>
     public partial class PicketWindow : Window
     {
         public PicketWindow()

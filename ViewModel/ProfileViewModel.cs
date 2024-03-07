@@ -16,6 +16,7 @@ namespace GeoFizik.ViewModel
     public class ProfileViewModel : PropChange
     {
         ApplicationContext db = ApplicationContext.getInstance();
+        DrawingImage image;
 
         Picket selectedPicket;
         ProfilePoint selectedPoint;
@@ -103,6 +104,7 @@ namespace GeoFizik.ViewModel
             {
                 selectedPicket = value;
                 OnPropertyChanged(nameof(SelectedPicket));
+                //Redraw();
             }
         }
         public ProfilePoint SelectedPoint
@@ -114,5 +116,31 @@ namespace GeoFizik.ViewModel
                 OnPropertyChanged(nameof(SelectedPoint));
             }
         }
+
+        public DrawingImage Image
+        {
+            get { return image; }
+            set
+            {
+                image = value;
+                OnPropertyChanged(nameof(Image));
+            }
+        }
+
+        /*void Redraw()
+        {
+            var newimage = new DrawModel();
+            foreach (var area in SelectedProject?.Areas ?? new())
+            {
+                if (area == SelectedArea) area.Draw(newimage, Brushes.Blue);
+                else area.Draw(newimage, Brushes.LightBlue);
+                foreach (var profile in area.Profiles ?? new())
+                {
+                    if (area == SelectedArea) profile.Draw(newimage, Brushes.Gray);
+                    else profile.Draw(newimage, Brushes.LightGray);
+                }
+            }
+            Image = newimage.Render();
+        }*/
     }
 }

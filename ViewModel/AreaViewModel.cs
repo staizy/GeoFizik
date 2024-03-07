@@ -8,6 +8,7 @@ namespace GeoFizik.ViewModel
     public class AreaViewModel : PropChange
     {
         ApplicationContext db = ApplicationContext.getInstance();
+        DrawingImage image;
 
         Profile selectedProfile;
         AreaPoint selectedPoint;
@@ -22,6 +23,7 @@ namespace GeoFizik.ViewModel
             DeleteProfileCommand = new(DeleteProfile, (obj) => SelectedProfile != null);
             OpenProfileCommand = new(OpenProfile);
             SavePointCommand = new(SavePoint);
+            Redraw();
         }
 
         public RelayCommand AddPointCommand { get; set; }
@@ -92,6 +94,7 @@ namespace GeoFizik.ViewModel
             {
                 selectedProfile = value;
                 OnPropertyChanged(nameof(SelectedProfile));
+                Redraw();
             }
         }
         public AreaPoint SelectedPoint
@@ -101,7 +104,35 @@ namespace GeoFizik.ViewModel
             {
                 selectedPoint = value;
                 OnPropertyChanged(nameof(SelectedPoint));
+                Redraw();
             }
         }
+        public DrawingImage Image
+        {
+            get { return image; }
+            set
+            {
+                image = value;
+                OnPropertyChanged(nameof(Image));
+            }
+        }
+        void Redraw()
+        {
+            var newimage = new DrawModel();
+            Area.Draw(newimage, Brushes.Blue);
+            foreach (var points in Area?.Points ?? new())
+            {
+                newimage.DrawCircle(points.X, points.Y, 0.3, Brushes.Blue);
+            }
+            Image = newimage.Render();
+        }
+
+        /*var vd = new VisDraw();
+        Area.Draw(vd, Brushes.Green);
+            foreach (var p in Area.Points ?? new ())
+                vd.DrawCircle(p.X, p.Y, 0.6, SelectedPoint == p? Brushes.Yellow : Brushes.Green);
+            foreach (var p in Area.Profiles ?? new ())
+                p.Draw(vd, p == SelectedProfile? Brushes.Yellow : Brushes.Green);
+        Image = vd.Render();*/
     }
 }

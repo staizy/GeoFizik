@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using GeoFizik.ViewModel;
+using System.Windows;
 
 namespace GeoFizik.View
 {
@@ -7,6 +8,7 @@ namespace GeoFizik.View
         public AreaWindow()
         {
             InitializeComponent();
+            DataContext = new AreaViewModel();
         }
     }
 }
