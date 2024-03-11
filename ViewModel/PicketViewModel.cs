@@ -32,7 +32,7 @@ namespace GeoFizik.ViewModel
         public PicketViewModel(Picket picket)
         {
             Picket = picket;
-            SelectedOperator = Picket.Operator;
+            if (Picket.Operator is not null) SelectedOperator = Picket.Operator;
             AddPicketValueCommand = new(AddPicketValue);
             DeletePicketValueCommand = new(DeletePicketValue, (obj) => SelectedPicketValue != null);
             SavePicketValueCommand = new(SavePicketValue);
@@ -76,7 +76,7 @@ namespace GeoFizik.ViewModel
 
         void AddOperator(object obj)
         {
-            var oper = new Operator() { Name = "", Surname = "", Pickets = new() { Picket } }; 
+            var oper = new Operator() { Name = "", Surname = "" };
             if (new AddOperatorDialogWindow(oper).ShowDialog() == false) return;
             else if (oper.Name == "" || oper.Surname == "")
             {
@@ -84,11 +84,9 @@ namespace GeoFizik.ViewModel
             }
             else
             {
-                Picket.Operator = oper;
-                SelectedOperator = oper;
-                Picket.Operator = oper;
                 db.Operators.Add(oper);
                 db.SaveChanges();
+                SelectedOperator = oper;
             }
         }
 
@@ -102,7 +100,8 @@ namespace GeoFizik.ViewModel
             if (MessageBox.Show("Удалить этого оператора?", "Удаление", MessageBoxButton.YesNo) == MessageBoxResult.No) return;
             else
             {
-                db.Operators.Remove(SelectedOperator);
+                db.Operators.Remove(SelectedOperator!);
+                SelectedOperator = null!;
                 db.SaveChanges();
             }
         }
@@ -143,16 +142,20 @@ namespace GeoFizik.ViewModel
             }
         }
 
-        public Operator SelectedOperator
+        public Operator? SelectedOperator
         {
             get => selectedOperator;
             set
             {
                 selectedOperator = value;
-                Picket.Operator = SelectedOperator;
+                Picket.Operator = value;
+                OnPropertyChanged(nameof(SelectedOperator));
+                db.Entry(Picket).State = EntityState.Modified;
+                db.SaveChanges();
                 SetPlotModel();
             }
         }
+
 
         private PlotModel plotModel;
         public PlotModel PlotModel
