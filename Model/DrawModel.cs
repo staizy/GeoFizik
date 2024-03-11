@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace GeoFizik.Model
 {
@@ -50,6 +51,40 @@ namespace GeoFizik.Model
             var geometryDrawing = new GeometryDrawing(null, new Pen(brush, width) { LineJoin = PenLineJoin.Round, DashCap = PenLineCap.Round }, pathGeometry);
             drawingGroup.Children.Add(geometryDrawing);
         }
+
+        public void DrawFlag(double x, double y, double radius, Brush brush)
+        {
+            var flagDrawingGroup = new DrawingGroup();
+
+            // Рисуем палку (линию)
+            var stickStartPoint = new Point(x, y); // Начало палки
+            var stickEndPoint = new Point(x, y - radius * 2); // Конец палки (полная длина палки будет два радиуса)
+            var stickGeometry = new LineGeometry(stickStartPoint, stickEndPoint);
+            var stickDrawing = new GeometryDrawing(Brushes.Brown, new Pen(brush, 0.05), stickGeometry);
+            flagDrawingGroup.Children.Add(stickDrawing);
+
+            // Рисуем кружочек на верхушке палки
+            var circleGeometry = new EllipseGeometry(new Point(x, y), radius / 2, radius / 2);
+            var circleDrawing = new GeometryDrawing(brush, null, circleGeometry);
+            flagDrawingGroup.Children.Add(circleDrawing);
+
+            // Рисуем маленький треугольник на конце палки (параллельно и с вершиной вправо)
+            var triangleGeometry = new PathGeometry();
+            var figure = new PathFigure();
+            figure.StartPoint = new Point(x - radius / 5, y - radius * 2 - radius / 5); // Начальная точка треугольника
+            figure.Segments.Add(new LineSegment(new Point(x + radius / 5, y - radius * 2), true)); // Правая сторона треугольника
+            figure.Segments.Add(new LineSegment(new Point(x - radius / 5, y - radius * 2 + radius / 5), true)); // Левая сторона треугольника
+            figure.IsClosed = true;
+            triangleGeometry.Figures.Add(figure);
+            var triangleDrawing = new GeometryDrawing(brush, new Pen(brush, 0.1), triangleGeometry);
+            flagDrawingGroup.Children.Add(triangleDrawing);
+
+            drawingGroup.Children.Add(flagDrawingGroup);
+        }
+
+
+
+
 
         public DrawingImage Render(int offset = 3, int grid = 10, bool drawAxes = false)
         {

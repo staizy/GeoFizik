@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows;
 using System.Windows.Media;
 using GeoFizik.View;
+using System.Drawing;
 
 namespace GeoFizik.ViewModel
 {
@@ -35,6 +36,7 @@ namespace GeoFizik.ViewModel
             SavePicketCommand = new(SavePicket);
             SavePointCommand = new(SavePoint);
             OpenPicketCommand = new(OpenPicket);
+            Redraw();
         }
         public RelayCommand AddPointCommand { get; set; }
         public RelayCommand DeletePointCommand { get; set; }
@@ -104,7 +106,7 @@ namespace GeoFizik.ViewModel
             {
                 selectedPicket = value;
                 OnPropertyChanged(nameof(SelectedPicket));
-                //Redraw();
+                Redraw();
             }
         }
         public ProfilePoint SelectedPoint
@@ -114,6 +116,7 @@ namespace GeoFizik.ViewModel
             {
                 selectedPoint = value;
                 OnPropertyChanged(nameof(SelectedPoint));
+                Redraw();
             }
         }
 
@@ -127,20 +130,21 @@ namespace GeoFizik.ViewModel
             }
         }
 
-        /*void Redraw()
+        void Redraw()
         {
             var newimage = new DrawModel();
-            foreach (var area in SelectedProject?.Areas ?? new())
+            Profile.Draw(newimage, Brushes.Gray);
+            foreach (var p in Profile?.Points ?? new()) 
             {
-                if (area == SelectedArea) area.Draw(newimage, Brushes.Blue);
-                else area.Draw(newimage, Brushes.LightBlue);
-                foreach (var profile in area.Profiles ?? new())
-                {
-                    if (area == SelectedArea) profile.Draw(newimage, Brushes.Gray);
-                    else profile.Draw(newimage, Brushes.LightGray);
-                }
+                if (p == SelectedPoint) newimage.DrawCircle(p.X, p.Y, 0.4, Brushes.Green);
+                else newimage.DrawCircle(p.X, p.Y, 0.4, Brushes.Gray);
+            }
+            foreach (var p in Profile?.Pickets ?? new())
+            {
+                if (p == SelectedPicket) newimage.DrawFlag(p.X, p.Y, 0.15, Brushes.Red);
+                else newimage.DrawFlag(p.X, p.Y, 0.15, Brushes.DarkRed);
             }
             Image = newimage.Render();
-        }*/
+        }
     }
 }

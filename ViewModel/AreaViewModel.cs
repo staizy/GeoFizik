@@ -125,7 +125,7 @@ namespace GeoFizik.ViewModel
                 if (SelectedPoint == point) newimage.DrawCircle(point.X, point.Y, 0.4, Brushes.Yellow);
                 else newimage.DrawCircle(point.X, point.Y, 0.4, Brushes.Blue);
             }
-            foreach (var point in Area.Profiles ?? new())
+            foreach (var point in Area?.Profiles ?? new())
             {
                 if (SelectedProfile == point) point.Draw(newimage, Brushes.Green);
                 else point.Draw(newimage, Brushes.Gray);
