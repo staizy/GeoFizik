@@ -142,7 +142,7 @@ namespace GeoFizik.ViewModel
             foreach (var p in Profile?.Pickets ?? new())
             {
                 if (p == SelectedPicket) newimage.DrawFlag(p.X, p.Y, 0.15, Brushes.Red);
-                else newimage.DrawFlag(p.X, p.Y, 0.15, Brushes.IndianRed);
+                else newimage.DrawFlag(p.X, p.Y, 0.15, Brushes.DarkRed);
             }
             Image = newimage.Render();
         }
