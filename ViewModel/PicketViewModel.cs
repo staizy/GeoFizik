@@ -52,27 +52,61 @@ namespace GeoFizik.ViewModel
         {
             var plotModel = new PlotModel() { Title = "График значений" };
 
-            plotModel.Axes.Add(new OxyPlot.Axes.LinearAxis() { Position = OxyPlot.Axes.AxisPosition.Left, Title = "H Эффективное", StartPosition = 1, EndPosition = 0 });
-            plotModel.Axes.Add(new OxyPlot.Axes.LinearAxis() { Position = OxyPlot.Axes.AxisPosition.Top, Title = "Амплитуда", StartPosition = 0, EndPosition = 1 });
+            var xAxis = new OxyPlot.Axes.LinearAxis { Position = OxyPlot.Axes.AxisPosition.Top, Title = "Амплитуда", StartPosition = 0, EndPosition = 1, /*IsZoomEnabled = false*/ };
+            var yAxis = new OxyPlot.Axes.LinearAxis { Position = OxyPlot.Axes.AxisPosition.Left, Title = "H Эффективное", StartPosition = 1, EndPosition = 0, /*IsZoomEnabled = false*/ };
 
-            foreach (var val in Picket.PicketValues ?? new ())
+            plotModel.Axes.Add(xAxis);
+            plotModel.Axes.Add(yAxis);
+
+            for (int i = 0; i < 800; i++)
+            {
+                var horizontalLineAnnotation = new OxyPlot.Annotations.LineAnnotation
+                {
+                    Type = OxyPlot.Annotations.LineAnnotationType.Horizontal,
+                    Y = i*1,
+                    Color = OxyColors.Gray,
+                    StrokeThickness = 1,
+                    LineStyle = LineStyle.Solid
+                };
+                plotModel.Annotations.Add(horizontalLineAnnotation);
+
+                var verticalLineAnnotation = new OxyPlot.Annotations.LineAnnotation
+                {
+                    Type = OxyPlot.Annotations.LineAnnotationType.Vertical,
+                    X = i*1,
+                    Color = OxyColors.Gray,
+                    StrokeThickness = 1,
+                    LineStyle = LineStyle.Solid
+                };
+                plotModel.Annotations.Add(verticalLineAnnotation);
+            }
+
+
+            if (Picket.PicketValues != null && Picket.PicketValues.Any())
             {
                 var lineSeries = new LineSeries
                 {
-                    Title = val.H_value.ToString(),
+                    Title = "График",
                     Color = OxyColors.Black,
-                    StrokeThickness = 2
+                    StrokeThickness = 3,
+                    MarkerType = MarkerType.Diamond,
+                    MarkerSize = 4, 
+                    MarkerStroke = OxyColors.Red,
+                    MarkerFill = OxyColors.Red
                 };
 
-                foreach (var picketValue in Picket.PicketValues)
+                foreach (var val in Picket.PicketValues)
                 {
-                    if (picketValue.Amplitude == 0 && picketValue.H_value == 0 && picketValue.Id == Picket.PicketValues.Last().Id) { return; }
-                    lineSeries.Points.Add(new DataPoint(picketValue.Amplitude, picketValue.H_value));
+                    lineSeries.Points.Add(new DataPoint(val.Amplitude, val.H_value));
                 }
+
+
                 plotModel.Series.Add(lineSeries);
             }
+
             PlotModel = plotModel;
         }
+
 
         void AddOperator(object obj)
         {
