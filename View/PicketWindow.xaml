@@ -87,17 +87,7 @@
             </Grid.RowDefinitions>
             <Label Grid.Row="0">График значений:</Label>
             <ScrollViewer Grid.Row="0" Grid.RowSpan="10" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
-                <!--<Image Source="{Binding Image}" Stretch="Uniform" Margin="4">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="PreviewMouseWheel">
-                            <i:InvokeCommandAction Command="{Binding ZoomCommand}" PassEventArgsToCommand="True" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Image>-->
-
-                <oxy:PlotView Model="{Binding PlotModel}">
-                    
-                </oxy:PlotView>
+                <oxy:PlotView Model="{Binding PlotModel}"/>
             </ScrollViewer>
         </Grid>
     </Grid>
