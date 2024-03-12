@@ -125,10 +125,12 @@ namespace GeoFizik.ViewModel
                 if (SelectedPoint == point) newimage.DrawCircle(point.X, point.Y, 0.4, Brushes.Yellow);
                 else newimage.DrawCircle(point.X, point.Y, 0.4, Brushes.Blue);
             }
-            foreach (var point in Area?.Profiles ?? new())
+            foreach (var profile in Area?.Profiles ?? new())
             {
-                if (SelectedProfile == point) point.Draw(newimage, Brushes.Green);
-                else point.Draw(newimage, Brushes.Gray);
+                if (SelectedProfile == profile && profile.IsCorrect()) profile.Draw(newimage, Brushes.Green);
+                else if (SelectedProfile == profile && !profile.IsCorrect()) profile.Draw(newimage, Brushes.Red);
+                else if (SelectedProfile != profile && profile.IsCorrect()) profile.Draw(newimage, Brushes.Gray);
+                else if (SelectedProfile != profile && !profile.IsCorrect()) profile.Draw(newimage, Brushes.Red);
             }
             Image = newimage.Render();
         }

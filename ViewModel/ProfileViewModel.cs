@@ -136,8 +136,10 @@ namespace GeoFizik.ViewModel
             Profile.Draw(newimage, Brushes.Gray);
             foreach (var p in Profile?.Points ?? new()) 
             {
-                if (p == SelectedPoint) newimage.DrawCircle(p.X, p.Y, 0.2, Brushes.Green);
-                else newimage.DrawCircle(p.X, p.Y, 0.2, Brushes.Gray);
+                if (p == SelectedPoint && Profile.IsCorrect()) newimage.DrawCircle(p.X, p.Y, 0.2, Brushes.Green);
+                else if (p == SelectedPoint && !Profile.IsCorrect()) newimage.DrawCircle(p.X, p.Y, 0.2, Brushes.Purple);
+                if (p == SelectedPoint && Profile.IsCorrect()) newimage.DrawCircle(p.X, p.Y, 0.2, Brushes.Green);
+                else if (p == SelectedPoint && !Profile.IsCorrect()) newimage.DrawCircle(p.X, p.Y, 0.2, Brushes.Purple);
             }
             foreach (var p in Profile?.Pickets ?? new())
             {

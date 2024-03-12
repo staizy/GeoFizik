@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -52,6 +53,7 @@ namespace GeoFizik.Model
                 OnPropertyChanged(nameof(Y));
             }
         }
+        [NotMapped]
         public Point AsPoint => new Point(x, y);
     }
 }
