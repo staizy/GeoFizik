@@ -21,7 +21,7 @@ namespace GeoFizik.Model
             if (instance == null)
             {
                 instance = new ApplicationContext();
-                instance.Database.EnsureDeleted();
+                //instance.Database.EnsureDeleted();
                 var exists = instance.Database.EnsureCreated();
 
                 instance.Customers.Load();

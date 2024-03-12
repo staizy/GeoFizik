@@ -52,8 +52,8 @@ namespace GeoFizik.ViewModel
         {
             var plotModel = new PlotModel() { Title = "График значений" };
 
-            var xAxis = new OxyPlot.Axes.LinearAxis { Position = OxyPlot.Axes.AxisPosition.Top, Title = "Амплитуда", StartPosition = 0, EndPosition = 1, /*IsZoomEnabled = false*/ };
-            var yAxis = new OxyPlot.Axes.LinearAxis { Position = OxyPlot.Axes.AxisPosition.Left, Title = "H Эффективное", StartPosition = 1, EndPosition = 0, /*IsZoomEnabled = false*/ };
+            var xAxis = new OxyPlot.Axes.LinearAxis { Position = OxyPlot.Axes.AxisPosition.Top, Title = "Амплитуда", StartPosition = 0, EndPosition = 1, IsZoomEnabled = false };
+            var yAxis = new OxyPlot.Axes.LinearAxis { Position = OxyPlot.Axes.AxisPosition.Left, Title = "H Эффективное", StartPosition = 1, EndPosition = 0, IsZoomEnabled = false };
 
             plotModel.Axes.Add(xAxis);
             plotModel.Axes.Add(yAxis);
@@ -99,8 +99,6 @@ namespace GeoFizik.ViewModel
                 {
                     lineSeries.Points.Add(new DataPoint(val.Amplitude, val.H_value));
                 }
-
-
                 plotModel.Series.Add(lineSeries);
             }
 
