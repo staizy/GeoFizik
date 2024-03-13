@@ -164,13 +164,15 @@ namespace GeoFizik.ViewModel
             foreach (var area in SelectedProject?.Areas ?? new())
             {
                 if (area == SelectedArea && area.IsCorrect()) area.Draw(newimage, Brushes.Blue);
-                else if (area == SelectedArea && !area.IsCorrect()) area.Draw(newimage, Brushes.Red);
+                else if (area == SelectedArea && !area.IsCorrect()) area.Draw(newimage, Brushes.Orange);
                 else if (area != SelectedArea && area.IsCorrect()) area.Draw(newimage, Brushes.LightBlue);
                 else if (area != SelectedArea && !area.IsCorrect()) area.Draw(newimage, Brushes.Red);
                 foreach (var profile in area.Profiles ?? new())
                 {
-                    if (area == SelectedArea) profile.Draw(newimage, Brushes.Gray);
-                    else profile.Draw(newimage, Brushes.LightGray);
+                    if (area == SelectedArea && profile.IsCorrect()) profile.Draw(newimage, Brushes.Gray);
+                    else if (area == SelectedArea && !profile.IsCorrect()) profile.Draw(newimage, Brushes.Red);
+                    else if (area != SelectedArea && profile.IsCorrect()) profile.Draw(newimage, Brushes.LightGray);
+                    else if (area != SelectedArea && !profile.IsCorrect()) profile.Draw(newimage, Brushes.IndianRed);
                 }
             }
             Image = newimage.Render();

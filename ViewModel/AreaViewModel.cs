@@ -130,7 +130,7 @@ namespace GeoFizik.ViewModel
                 if (SelectedProfile == profile && profile.IsCorrect()) profile.Draw(newimage, Brushes.Green);
                 else if (SelectedProfile == profile && !profile.IsCorrect()) profile.Draw(newimage, Brushes.Red);
                 else if (SelectedProfile != profile && profile.IsCorrect()) profile.Draw(newimage, Brushes.Gray);
-                else if (SelectedProfile != profile && !profile.IsCorrect()) profile.Draw(newimage, Brushes.Red);
+                else if (SelectedProfile != profile && !profile.IsCorrect()) profile.Draw(newimage, Brushes.IndianRed);
             }
             Image = newimage.Render();
         }

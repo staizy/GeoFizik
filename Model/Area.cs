@@ -16,8 +16,6 @@ namespace GeoFizik.Model
         ObservableCollection<Profile> profiles;
         ObservableCollection<AreaPoint> points;
 
-
-
         public void Draw(DrawModel dm, Brush br)
         {
             if (points is null) return;

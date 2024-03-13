@@ -42,6 +42,7 @@ namespace GeoFizik.Model
                 OnPropertyChanged(nameof(Area));
             }
         }
+
         public ObservableCollection<Picket> Pickets
         {
             get { return pickets; }
@@ -68,7 +69,7 @@ namespace GeoFizik.Model
                 for (int j = 0; j < Area.Points.Count; j++)
                     if (AreCrossing(points[i].AsPoint, points[i + 1].AsPoint, Area.Points[j].AsPoint, Area.Points[(j + 1) % Area.Points.Count].AsPoint))
                         return false;
-            foreach (var pr in Area.Profiles)
+            foreach (var pr in Area?.Profiles ?? new())
                 for (int i = 0; i < pr.Points?.Count - 1; i++)
                     for (int j = 0; j < points?.Count - 1; j++)
                         if (AreCrossing(pr.Points[i].AsPoint, pr.Points[i + 1].AsPoint, points[j].AsPoint, points[j + 1].AsPoint, colideSegments: pr == this ? Math.Abs(i - j) > 1 : true))
@@ -107,7 +108,6 @@ namespace GeoFizik.Model
             if (cp4 == 0 && IsPointOnSegment(b1, a2, b2))
                 return true;
             return false;
-
         }
     }
 }
