@@ -133,35 +133,19 @@ namespace GeoFizik.ViewModel
         void Redraw()
         {
             var newimage = new DrawModel();
-            //Profile.Draw(newimage, Brushes.Gray);
             if (Profile.IsCorrect()) Profile.Draw(newimage, Brushes.Gray);
             else Profile.Draw(newimage, Brushes.Red);
-            /*foreach (var p in Profile.Pickets)
-            {
-                if (p == SelectedPoint && Profile.IsCorrect()) newimage.DrawCircle(p.X, p.Y, 0.2, Brushes.Green);
-                else if (p == SelectedPoint && !Profile.IsCorrect()) newimage.DrawCircle(p.X, p.Y, 0.2, Brushes.Purple);
-                if (p == SelectedPoint && Profile.IsCorrect()) newimage.DrawCircle(p.X, p.Y, 0.2, Brushes.Green);
-                else if (p == SelectedPoint && !Profile.IsCorrect()) newimage.DrawCircle(p.X, p.Y, 0.2, Brushes.Purple);
-            }*/
             foreach (var p in Profile?.Points ?? new()) 
             {
-                if (p == SelectedPoint) newimage.DrawCircle(p.X, p.Y, 0.2, Brushes.Green);
-                else newimage.DrawCircle(p.X, p.Y, 0.2, Brushes.DarkGray);
+                if (p == SelectedPoint) newimage.DrawCircle(p.X, p.Y, 0.15, Brushes.Green);
+                else newimage.DrawCircle(p.X, p.Y, 0.15, Brushes.DarkGray);
             }
             foreach (var p in Profile?.Pickets ?? new())
             {
-                if (p == SelectedPicket) newimage.DrawFlag(p.X, p.Y, 0.15, Brushes.Red);
+                if (p == SelectedPicket) newimage.DrawFlag(p.X, p.Y, 0.17, Brushes.Red);
                 else newimage.DrawFlag(p.X, p.Y, 0.15, Brushes.DarkRed);
             }
             Image = newimage.Render();
         }
-
-        /*foreach (var p in pickets)
-                vd.DrawLine(p.proj.X, p.proj.Y, p.pic.X, p.pic.Y, Brushes.Orange, 0.2);
-            Profile.Draw(vd, (Profile.IsCorrect()? Brushes.Green : Brushes.Red));
-            foreach (var p in Profile.Points ?? new ())
-                vd.DrawCircle(p.X, p.Y, 0.5, SelectedPoint == p? Brushes.Yellow : Brushes.Green);
-            foreach (var p in Profile.Pickets ?? new ())
-                vd.DrawCircle(p.X, p.Y, 0.5, p == SelectedPicket? Brushes.Yellow : Brushes.Orange);*/
     }
 }
