@@ -75,6 +75,25 @@ namespace GeoFizik.Model
             }
         }
 
+        public static bool AreAreasIntersecting(ObservableCollection<AreaPoint> area1, ObservableCollection<AreaPoint> area2)
+        {
+            if (area1 != null && area2 != null)
+            {
+                for (int i = 0; i < area1.Count; i++)
+                {
+                    for (int j = 0; j < area2.Count; j++)
+                    {
+                        int nextI = (i + 1) % area1.Count;
+                        int nextJ = (j + 1) % area2.Count;
+
+                        if (AreCrossing(area1[i], area1[nextI], area2[j], area2[nextJ]))
+                            return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         public bool IsCorrect()
         {
             for (int i = 0; i < points?.Count; i++)
@@ -84,7 +103,7 @@ namespace GeoFizik.Model
             return true;
         }
 
-        public bool AreCrossing(AreaPoint a1, AreaPoint a2, AreaPoint b1, AreaPoint b2, bool colideSegments = true)
+        public static bool AreCrossing(AreaPoint a1, AreaPoint a2, AreaPoint b1, AreaPoint b2, bool colideSegments = true)
         {
             double CrossProduct(AreaPoint p1, AreaPoint p2, AreaPoint p3)
             {

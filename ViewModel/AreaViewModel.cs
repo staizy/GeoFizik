@@ -119,11 +119,14 @@ namespace GeoFizik.ViewModel
         void Redraw()
         {
             var newimage = new DrawModel();
-            Area.Draw(newimage, Brushes.Blue);
+            if (Area.IsCorrect()) Area.Draw(newimage, Brushes.Blue);
+            else Area.Draw(newimage, Brushes.Red);
             foreach (var point in Area?.Points ?? new())
             {
-                if (SelectedPoint == point) newimage.DrawCircle(point.X, point.Y, 0.4, Brushes.Yellow);
-                else newimage.DrawCircle(point.X, point.Y, 0.4, Brushes.Blue);
+                if (SelectedPoint == point && Area.IsCorrect()) newimage.DrawCircle(point.X, point.Y, 0.4, Brushes.Yellow);
+                else if (SelectedPoint == point && !Area.IsCorrect()) newimage.DrawCircle(point.X, point.Y, 0.4, Brushes.Red);
+                else if (SelectedPoint != point && Area.IsCorrect()) newimage.DrawCircle(point.X, point.Y, 0.4, Brushes.Blue);
+                else if (SelectedPoint != point && !Area.IsCorrect()) newimage.DrawCircle(point.X, point.Y, 0.4, Brushes.IndianRed);
             }
             foreach (var profile in Area?.Profiles ?? new())
             {
