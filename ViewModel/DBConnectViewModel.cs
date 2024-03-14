@@ -1,5 +1,6 @@
 ﻿using GeoFizik.Model;
 using GeoFizik.View;
+using System.Threading.Channels;
 using System.Windows;
 using System.Windows.Input;
 
@@ -42,23 +43,21 @@ namespace GeoFizik.ViewModel
                     bool exists = db.Database.CanConnect();
                     if (exists)
                     {
-                        MessageBox.Show("База данных уже существует.", "Подключение");
-                        new MainWindow()
-                        {
-                            DataContext = new MainViewModel()
-                        }.ShowDialog();
-                        OnPropertyChanged(nameof(obj));
+                        MessageBox.Show($"База данных {DbName} существует, подключаемся.", "Подключение");                        
                     }
                     else
                     {
                         db.Database.EnsureCreated();
-                        MessageBox.Show("Создана новая база данных.", "Подключение");
-                        new MainWindow()
-                        {
-                            DataContext = new MainViewModel()
-                        }.ShowDialog();
-                        OnPropertyChanged(nameof(obj));
+                        MessageBox.Show($"Создана новая база данных {DbName}, подключаемся.", "Подключение");
                     }
+                    var win = new MainWindow()
+                    {
+                        DataContext = new MainViewModel()
+                    };
+                    win.Show();
+                    Application.Current.MainWindow.Close();
+                    Application.Current.MainWindow = win;
+                    OnPropertyChanged(nameof(obj));
                 }
             }
         }

@@ -50,7 +50,7 @@ namespace GeoFizik.Model
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer($@"Server=LAPTOP-DA4EO4II;Database={ConnectionString};Trusted_Connection=True;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer($@"Server=.;Database={ConnectionString};Trusted_Connection=True;TrustServerCertificate=True");
         }
 
         /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:GeoFizik.View"
         xmlns:VM="clr-namespace:GeoFizik.ViewModel"
         mc:Ignorable="d"
-        Title="Database Connection" Height="240" Width="300" FontSize="20">
+        Title="Подключение к базе данных" Height="240" Width="500" 
+        MinHeight="240" MinWidth="500"
+        MaxHeight="240" MaxWidth="500" FontSize="20">
     <Window.DataContext>
         <VM:DBConnectViewModel/>
     </Window.DataContext>
@@ -17,9 +19,9 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="Enter Database Name:" Margin="10"/>
+        <TextBlock Grid.Row="0" Text="Введите название БД:" Margin="10"/>
         <TextBox Grid.Row="1" Text="{Binding DbName, UpdateSourceTrigger=PropertyChanged}" Margin="10"/>        
         <Button Grid.Row="2" Content="Вставить GeoKrizo2024" Command="{Binding EnterDefaultCommand}" Margin="10"/>
-        <Button Grid.Row="3" Content="Connect" Command="{Binding ConnectCommand}" Margin="10"/>
+        <Button Grid.Row="3" Content="Подключиться" Command="{Binding ConnectCommand}" Margin="10" Click="Button_Click"/>
     </Grid>
 </Window>

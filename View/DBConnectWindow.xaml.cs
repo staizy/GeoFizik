@@ -14,14 +14,16 @@ using System.Windows.Shapes;
 
 namespace GeoFizik.View
 {
-    /// <summary>
-    /// Логика взаимодействия для DBConnectWindow.xaml
-    /// </summary>
     public partial class DBConnectWindow : Window
     {
         public DBConnectWindow()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //Close();
         }
     }
 }
