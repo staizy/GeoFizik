@@ -15,14 +15,16 @@ namespace GeoFizik.Model
         public DbSet<Operator> Operators { get; set; }
         public DbSet<ProfilePoint> ProfilePoints { get; set; }
 
+        public static string ConnectionString { get; set; }
+
         private static ApplicationContext instance;
         public static ApplicationContext getInstance()
         {
             if (instance == null)
             {
-                instance = new ApplicationContext();
+                instance = new ApplicationContext(ConnectionString.ToString());
                 //instance.Database.EnsureDeleted();
-                var exists = instance.Database.EnsureCreated();
+                //var exists = instance.Database.EnsureCreated();
 
                 instance.Customers.Load();
                 instance.Projects.Load();
@@ -33,18 +35,30 @@ namespace GeoFizik.Model
                 instance.Profiles.Load();
                 instance.Pickets.Load();
                 instance.PicketValues.Load();
-                if (exists) instance.Customers.Add(DefaultData);
+                //if (exists) instance.Customers.Add(DefaultData);
                 instance.SaveChanges();
             }
             return instance;
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public ApplicationContext() { }
+
+        public ApplicationContext(string connectionString)
         {
-            optionsBuilder.UseSqlServer(@"Server=LAPTOP-DA4EO4II;Database=GeoKrizo2024;Trusted_Connection=True;TrustServerCertificate=True");
+            ConnectionString = connectionString;
         }
 
-        static Customer DefaultData = new Customer()
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer($@"Server=LAPTOP-DA4EO4II;Database={ConnectionString};Trusted_Connection=True;TrustServerCertificate=True");
+        }
+
+        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Server=LAPTOP-DA4EO4II;Database=GeoKrizo2024;Trusted_Connection=True;TrustServerCertificate=True");
+        }*/
+
+        /*static Customer DefaultData = new Customer()
         {
 
             Name = "Кит Магнит",
@@ -125,6 +139,6 @@ namespace GeoFizik.Model
                     }
                 }
             }
-        };
+        };*/
     }
 }

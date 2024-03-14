@@ -2,6 +2,7 @@
 using GeoFizik.View;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 
@@ -132,7 +133,7 @@ namespace GeoFizik.ViewModel
             set
             {
                 selectedProject = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(SelectedProject));
                 Redraw();
             }
         }
