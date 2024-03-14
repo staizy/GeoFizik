@@ -92,7 +92,7 @@
                                     <TextBox MinWidth="40" Text="{Binding X}">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="LostFocus">
-                                                <i:InvokeCommandAction Command="{Binding DataContext.SavePointCommand, ElementName=Main}" CommandParameter="{Binding}"/>
+                                                <i:InvokeCommandAction Command="{Binding DataContext.SavePicketCommand, ElementName=Main}" CommandParameter="{Binding}"/>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </TextBox>
@@ -100,7 +100,7 @@
                                     <TextBox MinWidth="40" Text="{Binding Y}" >
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="LostFocus">
-                                                <i:InvokeCommandAction Command="{Binding DataContext.SavePointCommand, ElementName=Main}" CommandParameter="{Binding}"/>
+                                                <i:InvokeCommandAction Command="{Binding DataContext.SavePicketCommand, ElementName=Main}" CommandParameter="{Binding}"/>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </TextBox>
