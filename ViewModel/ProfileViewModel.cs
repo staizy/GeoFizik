@@ -133,15 +133,16 @@ namespace GeoFizik.ViewModel
         void Redraw()
         {
             var newimage = new DrawModel();
-            Profile.Draw(newimage, Brushes.Gray);
+            if (Profile.IsCorrect()) Profile.Draw(newimage, Brushes.Gray);
+            else Profile.Draw(newimage, Brushes.Red);
             foreach (var p in Profile?.Points ?? new()) 
             {
-                if (p == SelectedPoint) newimage.DrawCircle(p.X, p.Y, 0.2, Brushes.Green);
-                else newimage.DrawCircle(p.X, p.Y, 0.2, Brushes.Gray);
+                if (p == SelectedPoint) newimage.DrawCircle(p.X, p.Y, 0.15, Brushes.Green);
+                else newimage.DrawCircle(p.X, p.Y, 0.15, Brushes.DarkGray);
             }
             foreach (var p in Profile?.Pickets ?? new())
             {
-                if (p == SelectedPicket) newimage.DrawFlag(p.X, p.Y, 0.15, Brushes.Red);
+                if (p == SelectedPicket) newimage.DrawFlag(p.X, p.Y, 0.17, Brushes.Red);
                 else newimage.DrawFlag(p.X, p.Y, 0.15, Brushes.DarkRed);
             }
             Image = newimage.Render();

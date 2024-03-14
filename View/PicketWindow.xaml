@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GeoFizik.View"
         mc:Ignorable="d"
-        xmlns:VM="clr-namespace:GeoFizik.ViewModel" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:VM="clr-namespace:GeoFizik.ViewModel" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:oxy="http://oxyplot.org/wpf"
         Title="GeoFizik" MinHeight="500" MinWidth="800" Name="Main" 
         Height="500" Width="800"
         FontSize="14">
@@ -72,9 +72,11 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Button Command="{Binding AddPicketValueCommand}">Добавить</Button>
                     <Button Command="{Binding DeletePicketValueCommand}" Grid.Column="1">Удалить</Button>
+                    <Button Command="{Binding RefreshPlotCommand}" Grid.Column="2">Обновить</Button>
                 </Grid>
             </Grid>
         </Grid>
@@ -85,13 +87,7 @@
             </Grid.RowDefinitions>
             <Label Grid.Row="0">График значений:</Label>
             <ScrollViewer Grid.Row="0" Grid.RowSpan="10" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
-                <Image Source="{Binding Image}" Stretch="Uniform" Margin="4">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="PreviewMouseWheel">
-                            <i:InvokeCommandAction Command="{Binding ZoomCommand}" PassEventArgsToCommand="True" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Image>
+                <oxy:PlotView Model="{Binding PlotModel}"/>
             </ScrollViewer>
         </Grid>
     </Grid>
