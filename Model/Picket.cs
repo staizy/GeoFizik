@@ -16,6 +16,47 @@ namespace GeoFizik.Model
         ObservableCollection<PicketValue>? picketValues;
         Operator? _operator;
 
+        public bool IsOnProfile()
+        {
+            foreach (var point in profile.Points)
+            {
+                if (X == point.X && Y == point.Y) return true;
+            }
+            foreach (var lineSegment in GetLineSegments())
+            {
+                if (ArePointsOnLineSegment(X, Y, lineSegment.Item1.X, lineSegment.Item1.Y, lineSegment.Item2.X, lineSegment.Item2.Y)) return true;
+            }
+            return false;
+        }
+
+        private ObservableCollection<Tuple<Point, Point>> GetLineSegments()
+        {
+            var lineSegments = new ObservableCollection<Tuple<Point, Point>>();
+
+            for (int i = 0; i < profile.Points.Count - 1; i++)
+            {
+                lineSegments.Add(new Tuple<Point, Point>(profile.Points[i].AsPoint, profile.Points[i + 1].AsPoint));
+            }
+
+            return lineSegments;
+        }
+
+        private bool ArePointsOnLineSegment(double px, double py, double x1, double y1, double x2, double y2)
+        {
+            double d1 = Distance(px, py, x1, y1);
+            double d2 = Distance(px, py, x2, y2);
+            double lineLength = Distance(x1, y1, x2, y2);
+
+            return Math.Abs(d1 + d2 - lineLength) < 0.001;
+        }
+
+        private double Distance(double x1, double y1, double x2, double y2)
+        {
+            double dx = x2 - x1;
+            double dy = y2 - y1;
+            return Math.Sqrt(dx * dx + dy * dy);
+        }
+
         public int Id
         {
             get { return id; }

@@ -14,7 +14,7 @@ namespace GeoFizik.ViewModel
         AreaPoint selectedPoint;
         public Area Area { get; set; }
         public AreaViewModel() : this(new Area()) { }
-        public AreaViewModel(Area area) 
+        public AreaViewModel(Area area)
         {
             Area = area;
             AddPointCommand = new(AddPoint);
@@ -59,10 +59,10 @@ namespace GeoFizik.ViewModel
         }
         void AddProfile(object obj)
         {
-            var point = new Profile() { Area = Area };
-            db.Profiles.Add(point);
+            var profile = new Profile() { Area = Area };
+            db.Profiles.Add(profile);
             db.SaveChanges();
-            SelectedProfile = point;
+            SelectedProfile = profile;
             OnPropertyChanged(nameof(Area));
         }
         void DeleteProfile(object obj)

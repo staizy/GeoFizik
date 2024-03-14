@@ -71,10 +71,10 @@ namespace GeoFizik.ViewModel
         }
         void AddPicket(object obj)
         {
-            var point = new Picket() { Profile = Profile };
-            db.Pickets.Add(point);
+            var picket = new Picket() { Profile = Profile };
+            db.Pickets.Add(picket);
             db.SaveChanges();
-            SelectedPicket = point;
+            SelectedPicket = picket;
             OnPropertyChanged(nameof(Profile));
         }
         void DeletePicket(object obj)
@@ -142,8 +142,10 @@ namespace GeoFizik.ViewModel
             }
             foreach (var p in Profile?.Pickets ?? new())
             {
-                if (p == SelectedPicket) newimage.DrawFlag(p.X, p.Y, 0.17, Brushes.Red);
-                else newimage.DrawFlag(p.X, p.Y, 0.15, Brushes.DarkRed);
+                if (p == SelectedPicket && p.IsOnProfile()) newimage.DrawFlag(p.X, p.Y, 0.17, Brushes.Red);
+                else if (p == SelectedPicket && !p.IsOnProfile()) newimage.DrawFlag(p.X, p.Y, 0.17, Brushes.Black);
+                else if (p != SelectedPicket && p.IsOnProfile()) newimage.DrawFlag(p.X, p.Y, 0.17, Brushes.DarkRed);
+                else if (p != SelectedPicket && !p.IsOnProfile()) newimage.DrawFlag(p.X, p.Y, 0.17, Brushes.DarkOliveGreen);
             }
             Image = newimage.Render();
         }

@@ -2,6 +2,7 @@
 using GeoFizik.View;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 
@@ -85,6 +86,7 @@ namespace GeoFizik.ViewModel
                 db.Projects.Add(project);
                 db.SaveChanges();
                 SelectedProject = project;
+                OnPropertyChanged(nameof(SelectedProject));
             }
         }
 
@@ -132,7 +134,7 @@ namespace GeoFizik.ViewModel
             set
             {
                 selectedProject = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(SelectedProject));
                 Redraw();
             }
         }
@@ -167,9 +169,6 @@ namespace GeoFizik.ViewModel
                 {
                     MessageBox.Show("Конфликт пересечения площадей! Необходимо исправить.", "Внимание!");
                 }
-            }
-            foreach (var area in SelectedProject?.Areas ?? new())
-            {
                 if (area == SelectedArea && area.IsCorrect()) area.Draw(newimage, Brushes.Blue);
                 else if (area == SelectedArea && !area.IsCorrect()) area.Draw(newimage, Brushes.Orange);
                 else if (area != SelectedArea && area.IsCorrect()) area.Draw(newimage, Brushes.LightBlue);
