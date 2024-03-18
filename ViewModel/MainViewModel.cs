@@ -87,6 +87,7 @@ namespace GeoFizik.ViewModel
                 db.SaveChanges();
                 SelectedProject = project;
                 OnPropertyChanged(nameof(SelectedProject));
+                OnPropertyChanged(nameof(SelectedCustomer));
             }
         }
 

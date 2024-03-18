@@ -9,6 +9,7 @@ namespace GeoFizik.ViewModel
     {
         ApplicationContext db = ApplicationContext.getInstance();
         DrawingImage image;
+        Random rnd = new Random();
 
         Profile selectedProfile;
         AreaPoint selectedPoint;
@@ -23,6 +24,7 @@ namespace GeoFizik.ViewModel
             DeleteProfileCommand = new(DeleteProfile, (obj) => SelectedProfile != null);
             OpenProfileCommand = new(OpenProfile);
             SavePointCommand = new(SavePoint);
+            AddRandomPointCommand = new(AddRandomPoint);
             Redraw();
         }
 
@@ -32,6 +34,7 @@ namespace GeoFizik.ViewModel
         public RelayCommand DeleteProfileCommand { get; set; }
         public RelayCommand OpenProfileCommand { get; set; }
         public RelayCommand SavePointCommand { get; set; }
+        public RelayCommand AddRandomPointCommand { get; set; }
 
         public string? AreaName
         {
@@ -41,6 +44,26 @@ namespace GeoFizik.ViewModel
                 Area.Name = value;
                 db.Entry(Area).State = EntityState.Modified;
                 db.SaveChanges();
+            }
+        }
+
+        void AddRandomPoint(object obj)
+        {
+            if (Area?.Points == null) { Area.Points = new() { new() { X = 0, Y = 0, Area = Area } }; return; }
+            while (true)
+            {
+                var lastPoint = Area.Points.OrderBy(p => p.Id).Last();
+                var newpoint = new AreaPoint() { X = Area.Points.Last().X + rnd.Next(-100, 100) % 10, Y = Area.Points.Last().Y + rnd.Next(-100, 100) % 10, Area = Area };
+                Area.Points.Add(newpoint);
+                if (Area.IsCorrect())
+                {
+                    db.AreaPoints.Add(newpoint);
+                    db.SaveChanges();
+                    SelectedPoint = newpoint;
+                    OnPropertyChanged(nameof(Area));
+                    break;
+                }
+                else Area.Points.Remove(newpoint);
             }
         }
 
