@@ -8,7 +8,8 @@
         mc:Ignorable="d"
         Title="Подключение к базе данных" Height="240" Width="500" 
         MinHeight="240" MinWidth="500"
-        MaxHeight="240" MaxWidth="500" FontSize="20">
+        MaxHeight="240" MaxWidth="500" FontSize="20"
+        WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <VM:DBConnectViewModel/>
     </Window.DataContext>

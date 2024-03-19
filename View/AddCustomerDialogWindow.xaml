@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="Новый Заказчик" MinHeight="190" MinWidth="320"
         MaxHeight="190" MaxWidth="320"
-        FontSize="18px">
+        FontSize="18px"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

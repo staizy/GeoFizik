@@ -6,9 +6,10 @@
         xmlns:local="clr-namespace:GeoFizik.View"
         mc:Ignorable="d"
         xmlns:VM="clr-namespace:GeoFizik.ViewModel" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:oxy="http://oxyplot.org/wpf"
-        Title="GeoFizik" MinHeight="500" MinWidth="800" Name="Main" 
+        Title="Пикет" MinHeight="500" MinWidth="800" Name="Main" 
         Height="500" Width="800"
-        FontSize="14">
+        FontSize="14"
+        WindowStartupLocation="CenterOwner">
     <Window.DataContext>
         <VM:PicketViewModel/>
     </Window.DataContext>

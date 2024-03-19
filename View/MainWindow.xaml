@@ -9,7 +9,8 @@
         Title="GeoFizik" MinHeight="500" MinWidth="800" Name="Main" 
         Height="500" Width="800"
         FontSize="14" 
-        xmlns:VM="clr-namespace:GeoFizik.ViewModel">
+        xmlns:VM="clr-namespace:GeoFizik.ViewModel"
+        WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <VM:MainViewModel/>
     </Window.DataContext>

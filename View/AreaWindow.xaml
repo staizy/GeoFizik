@@ -7,9 +7,10 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:VM="clr-namespace:GeoFizik.ViewModel"
         mc:Ignorable="d"
-        Title="GeoFizik" MinHeight="500" MinWidth="800" Name="Main"
+        Title="{Binding AreaName}" MinHeight="500" MinWidth="800" Name="Main"
         Height="500" Width="800"
-        FontSize="14">
+        FontSize="14"
+        WindowStartupLocation="CenterOwner">
     <Window.DataContext>
         <VM:AreaViewModel/>
     </Window.DataContext>
