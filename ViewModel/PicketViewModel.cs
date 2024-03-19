@@ -21,6 +21,7 @@ namespace GeoFizik.ViewModel
 
         PicketValue selectedPicketValue;
         Operator selectedOperator;
+        Random rnd = new();
 
         public Profile Profile { get; set; }
         public Picket Picket { get; set; }
@@ -39,6 +40,7 @@ namespace GeoFizik.ViewModel
             AddOperatorCommand = new(AddOperator);
             DeleteOperatorCommand = new(DeleteOperator, (obj) => SelectedOperator != null);
             RefreshPlotCommand = new(RefreshPlot);
+            AddRandomPicketValueCommand = new(AddRandomPicketValue);
             SetPlotModel();
         }
         public RelayCommand AddPicketValueCommand { get; set; }
@@ -47,6 +49,28 @@ namespace GeoFizik.ViewModel
         public RelayCommand SavePicketValueCommand { get; set; }
         public RelayCommand AddOperatorCommand { get; set; }
         public RelayCommand DeleteOperatorCommand { get; set; }
+        public RelayCommand AddRandomPicketValueCommand { get; set; }
+
+        void AddRandomPicketValue(object obj)
+        {
+            PicketValue newval = new();
+            if (Picket.PicketValues != null)
+            {
+                newval.Amplitude = Picket.PicketValues.Last().Amplitude + rnd.Next(-15, 15);
+                while (newval.Amplitude < 0) newval.Amplitude = Picket.PicketValues.Last().Amplitude + rnd.Next(-15,15);                
+                newval.H_value = Picket.PicketValues.Last().H_value + rnd.Next(0,15);
+                newval.Picket = Picket;
+                Picket.PicketValues.Add(newval);
+            }
+            else
+            {
+                var val = new PicketValue() { H_value = 0, Amplitude = 0, Picket = Picket };
+                Picket.PicketValues = new() { val };
+            }
+            db.SaveChanges();
+            OnPropertyChanged(nameof(Picket));
+            SetPlotModel();
+        }
 
         private void SetPlotModel()
         {

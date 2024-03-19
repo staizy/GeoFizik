@@ -66,8 +66,8 @@ namespace GeoFizik.ViewModel
                     double randomX = minX + (maxX - minX) * rnd.NextDouble();
                     double randomY = minY + (maxY - minY) * rnd.NextDouble();
 
-                    newpicket.X = Math.Round(randomX, 2);
-                    newpicket.Y = Math.Round(randomY, 2);
+                    newpicket.X = Math.Round(randomX, 1);
+                    newpicket.Y = Math.Round(randomY, 1);
 
                     newpicket.Profile = Profile;
 

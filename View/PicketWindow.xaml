@@ -73,10 +73,12 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Button Command="{Binding AddPicketValueCommand}">Добавить</Button>
                     <Button Command="{Binding DeletePicketValueCommand}" Grid.Column="1">Удалить</Button>
-                    <Button Command="{Binding RefreshPlotCommand}" Grid.Column="2">Обновить</Button>
+                    <Button Command="{Binding AddRandomPicketValueCommand}" Grid.Column="2">Рандом</Button>
+                    <Button Command="{Binding RefreshPlotCommand}" Grid.Column="3">Обновить</Button>
                 </Grid>
             </Grid>
         </Grid>
