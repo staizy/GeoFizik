@@ -49,11 +49,38 @@ namespace GeoFizik.ViewModel
 
         void AddRandomPoint(object obj)
         {
-            if (Area?.Points == null) { Area.Points = new() { new() { X = 0, Y = 0, Area = Area } }; return; }
+            if (Area?.Points == null || Area?.Points.Count == 0)
+            {
+                while (true)
+                {
+                    int deltaX, deltaY, r = rnd.Next(0, 100);
+                    do
+                    {
+                        deltaX = rnd.Next(-r, r);
+                        deltaY = rnd.Next(-r, r);
+                    } while (deltaX == 0 && deltaY == 0);
+                    if (Area.IsCorrect())
+                    {
+                        db.AreaPoints.Add(new() { X = deltaX, Y = deltaY, Area = Area } );
+                        db.SaveChanges();
+                        SelectedPoint = Area.Points[0];
+                        OnPropertyChanged();
+                        OnPropertyChanged(nameof(Area));
+                        OnPropertyChanged(nameof(Image));
+                        return;
+                    }
+                }
+            }
             while (true)
             {
                 var lastPoint = Area.Points.OrderBy(p => p.Id).Last();
-                var newpoint = new AreaPoint() { X = Area.Points.Last().X + rnd.Next(-100, 100) % 10, Y = Area.Points.Last().Y + rnd.Next(-100, 100) % 10, Area = Area };
+                int deltaX, deltaY, r = rnd.Next(1, 15);
+                do
+                {
+                    deltaX = rnd.Next(-r, r);
+                    deltaY = rnd.Next(-r, r);
+                } while (deltaX == 0 && deltaY == 0);
+                var newpoint = new AreaPoint() { X = Area.Points.Last().X + deltaX, Y = Area.Points.Last().Y + deltaY, Area = Area };
                 Area.Points.Add(newpoint);
                 if (Area.IsCorrect())
                 {
