@@ -18,6 +18,7 @@ namespace GeoFizik.ViewModel
     {
         ApplicationContext db = ApplicationContext.getInstance();
         DrawingImage image;
+        Random rnd = new Random();
 
         Picket selectedPicket;
         ProfilePoint selectedPoint;
@@ -36,6 +37,7 @@ namespace GeoFizik.ViewModel
             SavePicketCommand = new(SavePicket);
             SavePointCommand = new(SavePoint);
             OpenPicketCommand = new(OpenPicket);
+            AddRandomPointCommand = new(AddRandomPoint);
             Redraw();
         }
         public RelayCommand AddPointCommand { get; set; }
@@ -45,7 +47,47 @@ namespace GeoFizik.ViewModel
         public RelayCommand DeletePicketCommand { get; set; }
         public RelayCommand SavePicketCommand { get; set; }
         public RelayCommand SavePointCommand { get; set; }
-        public RelayCommand ZoomCommand { get; set; }
+        public RelayCommand AddRandomPointCommand { get; set; }
+
+        void AddRandomPoint(object obj)
+        {
+            if (Profile?.Points == null)
+            {
+                while (true)
+                {
+                    int deltaX, deltaY, r = rnd.Next(0, 100);
+                    do
+                    {
+                        deltaX = rnd.Next(-r, r);
+                        deltaY = rnd.Next(-r, r);
+                    } while (deltaX == 0 && deltaY == 0);
+                    Profile.Points = new() { new() { X = deltaX, Y = deltaY, Profile = Profile } };
+                    if (Profile.IsCorrect()) break;
+                }
+            }
+            
+            while (true)
+            {
+                var lastPoint = Profile.Points.OrderBy(p => p.Id).Last();
+                int deltaX, deltaY, r = rnd.Next(1, 10);
+                do
+                {
+                    deltaX = rnd.Next(-r, r);
+                    deltaY = rnd.Next(-r, r);
+                } while (deltaX == 0 && deltaY == 0);
+                var newpoint = new ProfilePoint() { X = Profile.Points.Last().X + deltaX, Y = Profile.Points.Last().Y + deltaY, Profile = Profile };
+                Profile.Points.Add(newpoint);
+                if (Profile.IsCorrect())
+                {
+                    db.ProfilePoints.Add(newpoint);
+                    db.SaveChanges();
+                    SelectedPoint = newpoint;
+                    OnPropertyChanged(nameof(Profile));
+                    break;
+                }
+                else Profile.Points.Remove(newpoint);
+            }
+        }
 
         void OpenPicket(object obj)
         {

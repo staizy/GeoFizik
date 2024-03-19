@@ -65,6 +65,20 @@ namespace GeoFizik.Model
 
         public bool IsCorrect()
         {
+            bool IsPointInsideArea(ProfilePoint point)
+            {
+                bool isInside = false;
+                for (int i = 0, j = Area.Points.Count - 1; i < Area.Points.Count; j = i++)
+                {
+                    if ((Area.Points[i].Y > point.Y) != (Area.Points[j].Y > point.Y) &&
+                        (point.X < (Area.Points[j].X - Area.Points[i].X) * (point.Y - Area.Points[i].Y) / (Area.Points[j].Y - Area.Points[i].Y) + Area.Points[i].X))
+                    {
+                        isInside = !isInside;
+                    }
+                }
+                return isInside;
+            }
+
             for (int i = 0; i < points?.Count - 1; i++)
                 for (int j = 0; j < Area.Points.Count; j++)
                     if (AreCrossing(points[i].AsPoint, points[i + 1].AsPoint, Area.Points[j].AsPoint, Area.Points[(j + 1) % Area.Points.Count].AsPoint))
@@ -74,6 +88,15 @@ namespace GeoFizik.Model
                     for (int j = 0; j < points?.Count - 1; j++)
                         if (AreCrossing(pr.Points[i].AsPoint, pr.Points[i + 1].AsPoint, points[j].AsPoint, points[j + 1].AsPoint, colideSegments: pr == this ? Math.Abs(i - j) > 1 : true))
                             return false;
+
+            if (points != null)
+            {
+                foreach (var point in points)
+                {
+                    if (!IsPointInsideArea(point))
+                        return false;
+                }
+            }
             return true;
         }
 

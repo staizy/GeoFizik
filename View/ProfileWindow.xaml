@@ -68,9 +68,11 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Button Command="{Binding AddPointCommand}">Добавить</Button>
-                    <Button Command="{Binding DeletePointCommand}" Grid.Column="1">Удалить</Button>
+                    <Button Command="{Binding AddRandomPointCommand}" Grid.Column="1">Рандом</Button>
+                    <Button Command="{Binding DeletePointCommand}" Grid.Column="2">Удалить</Button>
                 </Grid>
             </Grid>
         </Grid>
@@ -113,9 +115,11 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Button Command="{Binding AddPicketCommand}">Добавить</Button>
-                    <Button Command="{Binding DeletePicketCommand}" Grid.Column="1">Удалить</Button>
+                    <Button Command="{Binding AddRandomPicketCommand}" Grid.Column="1">Рандом</Button>
+                    <Button Command="{Binding DeletePicketCommand}" Grid.Column="2">Удалить</Button>
                 </Grid>
             </Grid>
         </Grid>

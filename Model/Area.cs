@@ -98,7 +98,7 @@ namespace GeoFizik.Model
         {
             for (int i = 0; i < points?.Count; i++)
                 for (int j = i + 1; j < points.Count; j++)
-                    if (AreCrossing(points[i], points[(i + 1)%points.Count], points[j], points[(j + 1) % points.Count], colideSegments : Math.Abs(i - j) > 1 && !(i == 0 && j == points.Count-1)))
+                    if (AreCrossing(points[i], points[(i + 1) % points.Count], points[j], points[(j + 1) % points.Count], colideSegments: Math.Abs(i - j) > 1 && !(i == 0 && j == points.Count - 1)))
                         return false;
             return true;
         }
