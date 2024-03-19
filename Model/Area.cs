@@ -94,14 +94,38 @@ namespace GeoFizik.Model
             return false;
         }
 
+        public bool AreAreasIntersecting()
+        {
+            foreach (var area1 in project?.Areas ?? new()) 
+            {
+                foreach(var area2 in project?.Areas ?? new())
+                {
+                    if (area1.Points != null && area2.Points != null && area1 != area2)
+                    {
+                        for (int i = 0; i < area1.Points.Count; i++)
+                        {
+                            for (int j = 0; j < area2.Points.Count; j++)
+                            {
+                                int nextI = (i + 1) % area1.Points.Count;
+                                int nextJ = (j + 1) % area2.Points.Count;
+
+                                if (AreCrossing(area1.Points[i], area1.Points[nextI], area2.Points[j], area2.Points[nextJ])) return true;
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
         public bool IsCorrect()
         {
-
-            //project.Areas[0]
             for (int i = 0; i < points?.Count; i++)
                 for (int j = i + 1; j < points.Count; j++)
                     if (AreCrossing(points[i], points[(i + 1) % points.Count], points[j], points[(j + 1) % points.Count], colideSegments: Math.Abs(i - j) > 1 && !(i == 0 && j == points.Count - 1)))
                         return false;
+            if (AreAreasIntersecting())
+                return false;
             return true;
         }
 

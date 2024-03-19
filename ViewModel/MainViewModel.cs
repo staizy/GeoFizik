@@ -166,10 +166,7 @@ namespace GeoFizik.ViewModel
             var newimage = new DrawModel();
             foreach (var area in SelectedProject?.Areas ?? new())
             {
-                if ((Area.AreAreasIntersecting(area.Points, SelectedArea?.Points ?? new()) && area != SelectedArea))
-                {
-                    MessageBox.Show("Конфликт пересечения площадей! Необходимо исправить.", "Внимание!");
-                }
+                //if (area.Project.Areas.Count >= 2 && area.AreAreasIntersecting()) MessageBox.Show("Конфликт пересечения площадей! Необходимо исправить.", "Внимание!");
                 if (area == SelectedArea && area.IsCorrect()) area.Draw(newimage, Brushes.Blue);
                 else if (area == SelectedArea && !area.IsCorrect()) area.Draw(newimage, Brushes.Orange);
                 else if (area != SelectedArea && area.IsCorrect()) area.Draw(newimage, Brushes.LightBlue);
