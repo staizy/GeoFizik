@@ -38,6 +38,7 @@ namespace GeoFizik.ViewModel
             SavePointCommand = new(SavePoint);
             OpenPicketCommand = new(OpenPicket);
             AddRandomPointCommand = new(AddRandomPoint);
+            AddRandomPicketCommand = new(AddRandomPicket);
             Redraw();
         }
         public RelayCommand AddPointCommand { get; set; }
@@ -48,46 +49,63 @@ namespace GeoFizik.ViewModel
         public RelayCommand SavePicketCommand { get; set; }
         public RelayCommand SavePointCommand { get; set; }
         public RelayCommand AddRandomPointCommand { get; set; }
+        public RelayCommand AddRandomPicketCommand { get; set; }
 
-        void AddRandomPoint(object obj)
+        void AddRandomPicket(object obj)
         {
             if (Profile?.Points == null)
             {
-                while (true)
-                {
-                    int deltaX, deltaY, r = rnd.Next(0, 100);
-                    do
-                    {
-                        deltaX = rnd.Next(-r, r);
-                        deltaY = rnd.Next(-r, r);
-                    } while (deltaX == 0 && deltaY == 0);
-                    Profile.Points = new() { new() { X = deltaX, Y = deltaY, Profile = Profile } };
-                    if (Profile.IsCorrect()) break;
-                }
+                MessageBox.Show("Отсутсвует профиль!", "Внимание");
+                return;
             }
-            
             while (true)
             {
-                var lastPoint = Profile.Points.OrderBy(p => p.Id).Last();
-                int deltaX, deltaY, r = rnd.Next(1, 10);
+                int deltaX, deltaY, r = rnd.Next(0, 100);
                 do
                 {
                     deltaX = rnd.Next(-r, r);
                     deltaY = rnd.Next(-r, r);
                 } while (deltaX == 0 && deltaY == 0);
-                var newpoint = new ProfilePoint() { X = Profile.Points.Last().X + deltaX, Y = Profile.Points.Last().Y + deltaY, Profile = Profile };
-                Profile.Points.Add(newpoint);
+                Profile.Pickets = new() { new() { X = deltaX, Y = deltaY, Profile = Profile } };
                 if (Profile.IsCorrect())
                 {
-                    db.ProfilePoints.Add(newpoint);
+                    var picket = new Picket() { Profile = Profile };
+                    db.Pickets.Add(picket);
                     db.SaveChanges();
-                    SelectedPoint = newpoint;
+                    SelectedPicket = picket;
                     OnPropertyChanged(nameof(Profile));
                     break;
                 }
-                else Profile.Points.Remove(newpoint);
             }
         }
+
+        void AddRandomPoint(object obj)
+        {
+            ProfilePoint p, pp;
+            if (Profile.Points != null && Profile.Points.Count > 0) pp = Profile.Points.Last();
+            else
+            {
+                pp = new ProfilePoint();
+                pp.X = Profile.Area.Points[0].X;
+                pp.Y = Profile.Area.Points[0].Y;
+            }
+            int off = 15;
+            while (true)
+            {
+                p = new ProfilePoint();
+                p.X = pp.X + rnd.Next(-off, off);
+                p.Y = pp.Y + rnd.Next(-off, off);
+                p.Profile = Profile;
+                db.ProfilePoints.Add(p);
+                if (Profile.IsCorrect()) break;
+                else db.ProfilePoints.Remove(p);
+            }
+            db.SaveChanges();
+            SelectedPoint = p;
+            OnPropertyChanged(nameof(Profile));
+            Redraw();
+        }
+
 
         void OpenPicket(object obj)
         {

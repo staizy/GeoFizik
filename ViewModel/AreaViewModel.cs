@@ -49,7 +49,34 @@ namespace GeoFizik.ViewModel
 
         void AddRandomPoint(object obj)
         {
-            if (Area?.Points == null || Area?.Points.Count == 0)
+            AreaPoint p, ap;
+            if (Area.Points != null && Area.Points.Count > 0) ap = Area.Points.Last();
+            else
+            {
+                ap = new AreaPoint();
+                ap.X = rnd.Next(-70,70);
+                ap.Y = rnd.Next(-70, 70);
+            }
+            int off = 20;
+            while (true)
+            {
+                p = new AreaPoint();
+                p.X = ap.X + rnd.Next(-off, off);
+                p.Y = ap.Y + rnd.Next(-off, off);
+                p.Area = Area;
+                db.AreaPoints.Add(p);
+                if (Area.IsCorrect()) break;
+                else db.AreaPoints.Remove(p);
+            }
+            db.SaveChanges();
+            SelectedPoint = p;
+            OnPropertyChanged(nameof(Area));
+            Redraw();
+        }
+
+        /*void AddRandomPoint(object obj)
+        {
+            if (Area?.Points == null)
             {
                 while (true)
                 {
@@ -59,16 +86,15 @@ namespace GeoFizik.ViewModel
                         deltaX = rnd.Next(-r, r);
                         deltaY = rnd.Next(-r, r);
                     } while (deltaX == 0 && deltaY == 0);
+                    Area.Points = new() { new() { X = deltaX, Y = deltaY, Area = Area } };
                     if (Area.IsCorrect())
                     {
-                        db.AreaPoints.Add(new() { X = deltaX, Y = deltaY, Area = Area } );
                         db.SaveChanges();
                         SelectedPoint = Area.Points[0];
-                        OnPropertyChanged();
                         OnPropertyChanged(nameof(Area));
-                        OnPropertyChanged(nameof(Image));
                         return;
                     }
+                    else Area.Points.Remove(new() { X = deltaX, Y = deltaY, Area = Area });
                 }
             }
             while (true)
@@ -84,7 +110,6 @@ namespace GeoFizik.ViewModel
                 Area.Points.Add(newpoint);
                 if (Area.IsCorrect())
                 {
-                    db.AreaPoints.Add(newpoint);
                     db.SaveChanges();
                     SelectedPoint = newpoint;
                     OnPropertyChanged(nameof(Area));
@@ -92,7 +117,7 @@ namespace GeoFizik.ViewModel
                 }
                 else Area.Points.Remove(newpoint);
             }
-        }
+        }*/
 
         void AddPoint(object obj)
         {
