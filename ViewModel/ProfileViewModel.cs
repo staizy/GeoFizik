@@ -53,31 +53,42 @@ namespace GeoFizik.ViewModel
 
         void AddRandomPicket(object obj)
         {
-            if (Profile?.Points == null)
+            Picket newpicket = new Picket();
+            if (Profile.Points != null)
             {
-                MessageBox.Show("Отсутсвует профиль!", "Внимание");
-                return;
-            }
-            while (true)
-            {
-                int deltaX, deltaY, r = rnd.Next(0, 100);
-                do
+                while (true)
                 {
-                    deltaX = rnd.Next(-r, r);
-                    deltaY = rnd.Next(-r, r);
-                } while (deltaX == 0 && deltaY == 0);
-                Profile.Pickets = new() { new() { X = deltaX, Y = deltaY, Profile = Profile } };
-                if (Profile.IsCorrect())
-                {
-                    var picket = new Picket() { Profile = Profile };
-                    db.Pickets.Add(picket);
-                    db.SaveChanges();
-                    SelectedPicket = picket;
-                    OnPropertyChanged(nameof(Profile));
-                    break;
+                    double minX = Profile.Points.Min(point => point.X);
+                    double maxX = Profile.Points.Max(point => point.X);
+                    double minY = Profile.Points.Min(point => point.Y);
+                    double maxY = Profile.Points.Max(point => point.Y);
+
+                    double randomX = minX + (maxX - minX) * rnd.NextDouble();
+                    double randomY = minY + (maxY - minY) * rnd.NextDouble();
+
+                    newpicket.X = Math.Round(randomX, 2);
+                    newpicket.Y = Math.Round(randomY, 2);
+
+                    newpicket.Profile = Profile;
+
+                    db.Pickets.Add(newpicket);
+
+                    if (newpicket.IsOnProfile() && !db.Pickets.Any(p => p.X == newpicket.X && p.Y == newpicket.Y)) break;
+                    else db.Pickets.Remove(newpicket);
                 }
             }
+            else
+            {
+                MessageBox.Show("Отсутсвует профиль!");
+                return;
+            }
+            db.SaveChanges();
+            SelectedPicket = newpicket;
+            OnPropertyChanged(nameof(Profile));
+            OnPropertyChanged(nameof(Picket));
+            Redraw();
         }
+
 
         void AddRandomPoint(object obj)
         {
