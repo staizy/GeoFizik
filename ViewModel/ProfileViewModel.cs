@@ -92,7 +92,7 @@ namespace GeoFizik.ViewModel
 
         void AddRandomPoint(object obj)
         {
-            ProfilePoint p, pp;
+            ProfilePoint pp, p = new();
             if (Profile.Points != null && Profile.Points.Count > 0) pp = Profile.Points.Last();
             else
             {
@@ -101,7 +101,7 @@ namespace GeoFizik.ViewModel
                 pp.Y = Profile.Area.Points[0].Y;
             }
             int off = 15;
-            while (true)
+            for (int i = 0; i < 1000; i++)
             {
                 p = new ProfilePoint();
                 p.X = pp.X + rnd.Next(-off, off);
@@ -109,6 +109,12 @@ namespace GeoFizik.ViewModel
                 p.Profile = Profile;
                 db.ProfilePoints.Add(p);
                 if (Profile.IsCorrect()) break;
+                else if (i == 999 && !Profile.IsCorrect())
+                {
+                    MessageBox.Show("Некуда ставить точку, исправьте сами либо попробуйте еще раз.");
+                    db.ProfilePoints.Remove(p);
+                    break;
+                }    
                 else db.ProfilePoints.Remove(p);
             }
             db.SaveChanges();

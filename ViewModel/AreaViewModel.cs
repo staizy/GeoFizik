@@ -1,6 +1,7 @@
 ﻿using GeoFizik.Model;
 using GeoFizik.View;
 using Microsoft.EntityFrameworkCore;
+using System.Windows;
 using System.Windows.Media;
 
 namespace GeoFizik.ViewModel
@@ -49,7 +50,7 @@ namespace GeoFizik.ViewModel
 
         void AddRandomPoint(object obj)
         {
-            AreaPoint p, ap;
+            AreaPoint ap, p = new();
             if (Area.Points != null && Area.Points.Count > 0) ap = Area.Points.Last();
             else
             {
@@ -58,7 +59,7 @@ namespace GeoFizik.ViewModel
                 ap.Y = rnd.Next(-70, 70);
             }
             int off = 20;
-            while (true)
+            for (int i = 0; i < 1000; i++)
             {
                 p = new AreaPoint();
                 p.X = ap.X + rnd.Next(-off, off);
@@ -66,11 +67,19 @@ namespace GeoFizik.ViewModel
                 p.Area = Area;
                 db.AreaPoints.Add(p);
                 if (Area.IsCorrect()) break;
+                else if (i == 999 && !Area.IsCorrect())
+                {
+                    MessageBox.Show("Некуда ставить точку, исправьте сами либо попробуйте еще раз.");
+                    db.AreaPoints.Remove(p);
+                    p = ap;
+                    break;
+                }
                 else db.AreaPoints.Remove(p);
             }
             db.SaveChanges();
             SelectedPoint = p;
             OnPropertyChanged(nameof(Area));
+            OnPropertyChanged(nameof(Area.Points));
             Redraw();
         }
 
@@ -131,6 +140,8 @@ namespace GeoFizik.ViewModel
         {
             db.AreaPoints.Remove(SelectedPoint);
             db.SaveChanges();
+            OnPropertyChanged(nameof(Area));
+            OnPropertyChanged(nameof(Area.Points));
         }
         void AddProfile(object obj)
         {

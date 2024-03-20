@@ -96,7 +96,10 @@ namespace GeoFizik.Model
                     if (!IsPointInsideArea(point))
                         return false;
                 }
+                if (points.Any(p => points.Count(p2 => p2.X == p.X && p2.Y == p.Y) > 1))
+                    return false;
             }
+
             return true;
         }
 

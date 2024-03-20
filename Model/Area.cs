@@ -127,6 +127,7 @@ namespace GeoFizik.Model
             if (AreAreasIntersecting())
                 return false;
             return true;
+            
         }
 
         public static bool AreCrossing(AreaPoint a1, AreaPoint a2, AreaPoint b1, AreaPoint b2, bool colideSegments = true)
