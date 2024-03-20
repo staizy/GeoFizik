@@ -131,6 +131,7 @@ namespace GeoFizik.ViewModel
                 DataContext = new PicketViewModel((Picket)obj)
             }.ShowDialog();
             OnPropertyChanged(nameof(obj));
+            Redraw();
         }
 
         void AddPoint(object obj)

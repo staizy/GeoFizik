@@ -117,6 +117,7 @@ namespace GeoFizik.ViewModel
             }.ShowDialog();
             OnPropertyChanged(nameof(SelectedProject.Areas));
             OnPropertyChanged(nameof(obj));
+            Redraw();
         }
 
         public Customer SelectedCustomer

@@ -164,6 +164,7 @@ namespace GeoFizik.ViewModel
                 DataContext = new ProfileViewModel((Profile)obj)
             }.ShowDialog();
             OnPropertyChanged(nameof(obj));
+            Redraw();
         }
         void SavePoint(object obj)
         {
