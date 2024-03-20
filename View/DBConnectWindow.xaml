@@ -23,6 +23,6 @@
         <TextBlock Grid.Row="0" Text="Введите название БД:" Margin="10"/>
         <TextBox Grid.Row="1" Text="{Binding DbName, UpdateSourceTrigger=PropertyChanged}" Margin="10"/>        
         <Button Grid.Row="2" Content="Вставить GeoKrizo2024" Command="{Binding EnterDefaultCommand}" Margin="10"/>
-        <Button Grid.Row="3" Content="Подключиться" Command="{Binding ConnectCommand}" Margin="10" Click="Button_Click"/>
+        <Button Grid.Row="3" Content="Подключиться" Command="{Binding ConnectCommand}" Margin="10"/>
     </Grid>
 </Window>
