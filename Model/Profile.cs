@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Media;
 
-
 namespace GeoFizik.Model
 {
     public class Profile : PropChange

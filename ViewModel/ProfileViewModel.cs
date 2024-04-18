@@ -1,5 +1,6 @@
 ﻿using GeoFizik.Model;
 using Microsoft.EntityFrameworkCore;
+using Brushes = System.Windows.Media.Brushes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

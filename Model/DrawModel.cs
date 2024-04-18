@@ -1,7 +1,6 @@
 ﻿using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace GeoFizik.Model
 {
@@ -47,7 +46,7 @@ namespace GeoFizik.Model
         {
             if (points == null || !points.Any()) return;
             var figure = new PathFigure(points.First(), points.Skip(1).Select(p => new LineSegment(p, true)), isClosed);
-            var pathGeometry = new PathGeometry([figure]);
+            var pathGeometry = new PathGeometry(new PathFigure[] { figure });
             var geometryDrawing = new GeometryDrawing(null, new Pen(brush, width) { LineJoin = PenLineJoin.Round, DashCap = PenLineCap.Round }, pathGeometry);
             drawingGroup.Children.Add(geometryDrawing);
         }
